@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forex Trading Bot — Dashboard</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #232736;
+  --border: #2d3148;
+  --text: #e4e6f0;
+  --text-dim: #8b8fa3;
+  --green: #00d68f;
+  --green-bg: rgba(0,214,143,0.1);
+  --red: #ff6b6b;
+  --red-bg: rgba(255,107,107,0.1);
+  --blue: #4dabf7;
+  --blue-bg: rgba(77,171,247,0.1);
+  --yellow: #ffd43b;
+  --yellow-bg: rgba(255,212,59,0.1);
+  --purple: #b197fc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.5;
+  padding: 20px;
+}
+.container { max-width: 1400px; margin: 0 auto; }
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 24px; background: var(--surface); border-radius: 12px;
+  border: 1px solid var(--border); margin-bottom: 20px;
+}
+header h1 { font-size: 20px; font-weight: 600; }
+header .status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
+header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.badge { background: var(--surface2); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--blue); }
+
+/* Summary cards */
+.summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px 20px;
+}
+.card .label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+.card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+.card .sub { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+.positive { color: var(--green); }
+.negative { color: var(--red); }
+.neutral { color: var(--text-dim); }
+
+/* Sections */
+.section {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; margin-bottom: 20px;
+}
+.section h2 {
+  font-size: 16px; font-weight: 600; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section h2 .count {
+  background: var(--surface2); padding: 2px 8px; border-radius: 6px;
+  font-size: 12px; color: var(--text-dim);
+}
+
+/* Signal cards */
+.signal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+.signal-card {
+  background: var(--surface2); border-radius: 10px; padding: 16px;
+  border-left: 3px solid var(--border); transition: transform 0.15s;
+}
+.signal-card:hover { transform: translateY(-2px); }
+.signal-card.long { border-left-color: var(--green); }
+.signal-card.short { border-left-color: var(--red); }
+.signal-card.no-trade { border-left-color: var(--border); opacity: 0.6; }
+.signal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.signal-pair { font-weight: 700; font-size: 16px; }
+.signal-type {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.signal-type.long { background: var(--green-bg); color: var(--green); }
+.signal-type.short { background: var(--red-bg); color: var(--red); }
+.signal-type.no-trade { background: var(--surface); color: var(--text-dim); }
+.confluence-bar {
+  display: flex; gap: 3px; margin: 8px 0;
+}
+.confluence-dot {
+  width: 100%; height: 6px; border-radius: 3px; background: var(--surface);
+}
+.confluence-dot.active { background: var(--blue); }
+.confluence-dot.active.high { background: var(--green); }
+.signal-details { font-size: 12px; color: var(--text-dim); }
+.signal-trade {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.signal-trade .label { color: var(--text-dim); }
+.signal-trade .val { font-weight: 600; font-family: 'SF Mono', 'Consolas', monospace; }
+
+/* Position cards */
+.position-card {
+  background: var(--surface2); border-radius: 10px; padding: 16px; margin-bottom: 10px;
+  border-left: 3px solid var(--blue);
+}
+.position-header { display: flex; justify-content: space-between; align-items: center; }
+.position-pnl { font-size: 18px; font-weight: 700; }
+.position-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px; margin-top: 10px; font-size: 12px;
+}
+.position-meta .item .label { color: var(--text-dim); }
+.position-meta .item .val { font-weight: 600; font-family: 'SF Mono', 'Consolas', monospace; }
+
+/* Monitoring log */
+.monitor-timeline { max-height: 400px; overflow-y: auto; }
+.monitor-event {
+  display: flex; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid var(--border); font-size: 13px;
+}
+.monitor-event:last-child { border-bottom: none; }
+.monitor-time { color: var(--text-dim); min-width: 80px; font-family: 'SF Mono', monospace; font-size: 12px; }
+.monitor-icon { min-width: 20px; text-align: center; }
+.monitor-msg { flex: 1; }
+
+/* Trade history */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; color: var(--text-dim); font-size: 11px;
+     text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: var(--surface2); }
+.mono { font-family: 'SF Mono', 'Consolas', monospace; }
+
+/* Empty state */
+.empty { text-align: center; padding: 40px; color: var(--text-dim); }
+.empty-icon { font-size: 32px; margin-bottom: 8px; }
+
+/* Mini chart for monitoring */
+.mini-chart { display: flex; align-items: end; gap: 1px; height: 30px; }
+.mini-bar { width: 4px; border-radius: 1px; min-height: 2px; }
+
+/* Refresh controls */
+.refresh-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 16px; background: var(--surface2); border-radius: 8px;
+  margin-bottom: 16px; font-size: 12px; color: var(--text-dim);
+}
+.refresh-bar button {
+  background: var(--blue); color: white; border: none; padding: 6px 14px;
+  border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;
+}
+.refresh-bar button:hover { opacity: 0.85; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div>
+    <h1>Forex Trading Bot</h1>
+    <div class="status"><div class="dot" id="statusDot"></div><span id="statusText">Loading...</span></div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span class="badge">MOCK MODE</span>
+    <span class="badge" style="color:var(--purple)">v2.0</span>
+  </div>
+</header>
+
+<div class="refresh-bar">
+  <span>Last updated: <strong id="lastUpdated">—</strong></span>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <label style="font-size:12px;">Auto-refresh
+      <input type="checkbox" id="autoRefresh" checked>
+    </label>
+    <button onclick="loadData()">Refresh Now</button>
+  </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-grid" id="summaryCards"></div>
+
+<!-- Open Positions -->
+<div class="section" id="positionsSection">
+  <h2>Open Positions <span class="count" id="posCount">0</span></h2>
+  <div id="positionsContainer"></div>
+</div>
+
+<!-- Signals -->
+<div class="section" id="signalsSection">
+  <h2>Today's Signals <span class="count" id="sigCount">0</span></h2>
+  <div class="signal-grid" id="signalsContainer"></div>
+</div>
+
+<div class="two-col">
+  <!-- Trade History -->
+  <div class="section">
+    <h2>Trade History <span class="count" id="tradeCount">0</span></h2>
+    <div id="tradesContainer" style="max-height:400px;overflow-y:auto;"></div>
+  </div>
+
+  <!-- Monitoring Log -->
+  <div class="section">
+    <h2>Monitoring Log <span class="count" id="monCount">0</span></h2>
+    <div class="monitor-timeline" id="monitorContainer"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const DATA_URL = 'dashboard_data.json';
+let refreshInterval = null;
+
+async function loadData() {
+  try {
+    const resp = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('No data file found');
+    const data = await resp.json();
+    render(data);
+    document.getElementById('statusDot').style.background = 'var(--green)';
+    document.getElementById('statusText').textContent = 'Connected — Mock Mode';
+  } catch (e) {
+    document.getElementById('statusDot').style.background = 'var(--yellow)';
+    document.getElementById('statusText').textContent = 'No data — Run simulation first';
+    renderEmpty();
+  }
+}
+
+function render(data) {
+  const s = data.summary || {};
+  document.getElementById('lastUpdated').textContent = formatTime(data.generated_at);
+
+  // Summary cards
+  const pnlClass = s.total_pnl_usd > 0 ? 'positive' : s.total_pnl_usd < 0 ? 'negative' : 'neutral';
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="card">
+      <div class="label">Total P&L</div>
+      <div class="value ${pnlClass}">$${s.total_pnl_usd >= 0 ? '+' : ''}${(s.total_pnl_usd||0).toFixed(2)}</div>
+      <div class="sub">${s.total_trades||0} trades completed</div>
+    </div>
+    <div class="card">
+      <div class="label">Win Rate</div>
+      <div class="value">${(s.win_rate||0).toFixed(1)}%</div>
+      <div class="sub">${s.wins||0}W / ${s.losses||0}L</div>
+    </div>
+    <div class="card">
+      <div class="label">Open Positions</div>
+      <div class="value" style="color:var(--blue)">${s.open_positions||0}</div>
+      <div class="sub">Max 3 simultaneous</div>
+    </div>
+    <div class="card">
+      <div class="label">Capital</div>
+      <div class="value">$${(10000 + (s.total_pnl_usd||0)).toFixed(0)}</div>
+      <div class="sub">${s.total_pnl_usd >= 0 ? '+' : ''}${((s.total_pnl_usd||0)/100).toFixed(2)}% return</div>
+    </div>
+  `;
+
+  // Positions
+  const positions = (data.positions?.positions) || [];
+  document.getElementById('posCount').textContent = positions.length;
+  if (positions.length === 0) {
+    document.getElementById('positionsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📊</div>No open positions</div>';
+  } else {
+    document.getElementById('positionsContainer').innerHTML = positions.map(p => {
+      const pnl = p.current_pnl_pips || 0;
+      const pnlClass = pnl > 0 ? 'positive' : pnl < 0 ? 'negative' : 'neutral';
+      const monHist = (p.monitoring_history || []).slice(-12);
+      const miniChart = monHist.length > 1 ? renderMiniChart(monHist) : '';
+      return `
+        <div class="position-card">
+          <div class="position-header">
+            <div>
+              <span style="font-weight:700;font-size:16px">${p.pair}</span>
+              <span class="signal-type ${p.direction?.toLowerCase()}">${p.direction}</span>
+              ${p.trailing_stop_active ? '<span class="badge" style="color:var(--yellow)">TRAILING</span>' : ''}
+            </div>
+            <div class="position-pnl ${pnlClass}">${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)} pips</div>
+          </div>
+          <div class="position-meta">
+            <div class="item"><div class="label">Entry</div><div class="val mono">${p.entry_price}</div></div>
+            <div class="item"><div class="label">Stop Loss</div><div class="val mono" style="color:var(--red)">${p.stop_loss}</div></div>
+            <div class="item"><div class="label">Take Profit</div><div class="val mono" style="color:var(--green)">${p.take_profit}</div></div>
+            <div class="item"><div class="label">Confluence</div><div class="val">${p.current_confluence || p.entry_confluence || '?'}/8</div></div>
+            <div class="item"><div class="label">Units</div><div class="val mono">${(p.units||0).toLocaleString()}</div></div>
+            <div class="item"><div class="label">Order ID</div><div class="val mono" style="font-size:10px">${p.order_id}</div></div>
+          </div>
+          ${miniChart ? `<div style="margin-top:10px">${miniChart}</div>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // Signals
+  const signals = (data.signals?.signals) || [];
+  document.getElementById('sigCount').textContent = signals.length;
+  if (signals.length === 0) {
+    document.getElementById('signalsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📡</div>No signals yet — run morning scan</div>';
+  } else {
+    document.getElementById('signalsContainer').innerHTML = signals.map(sig => {
+      const dir = sig.direction?.toLowerCase() || 'no-trade';
+      const cc = sig.confluence_count || 0;
+      const isHigh = cc >= 6;
+      return `
+        <div class="signal-card ${dir}">
+          <div class="signal-header">
+            <span class="signal-pair">${sig.pair}</span>
+            <span class="signal-type ${dir}">${sig.signal}</span>
+          </div>
+          <div class="confluence-bar">
+            ${Array.from({length:8}, (_,i) =>
+              `<div class="confluence-dot ${i < cc ? 'active' : ''} ${i < cc && isHigh ? 'high' : ''}"></div>`
+            ).join('')}
+          </div>
+          <div class="signal-details">
+            Trend: ${sig.trend} (${(sig.trend_strength||0).toFixed(0)}/100)
+            ${sig.reason ? `<br>${sig.reason}` : ''}
+          </div>
+          ${sig.trade ? `
+            <div class="signal-trade">
+              <div><div class="label">Entry</div><div class="val mono">${sig.trade.entry}</div></div>
+              <div><div class="label">SL (${sig.trade.sl_pips} pips)</div><div class="val mono" style="color:var(--red)">${sig.trade.stop_loss?.toFixed(5)||sig.trade.stop_loss}</div></div>
+              <div><div class="label">TP (${sig.trade.tp1_pips} pips)</div><div class="val mono" style="color:var(--green)">${sig.trade.tp1?.toFixed(5)||sig.trade.tp1}</div></div>
+            </div>
+          ` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // Trade history
+  const trades = (data.trades?.trades) || [];
+  document.getElementById('tradeCount').textContent = trades.length;
+  if (trades.length === 0) {
+    document.getElementById('tradesContainer').innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No trades yet</div>';
+  } else {
+    document.getElementById('tradesContainer').innerHTML = `
+      <table>
+        <thead><tr><th>Pair</th><th>Dir</th><th>Entry</th><th>Exit</th><th>P&L</th><th>Reason</th></tr></thead>
+        <tbody>
+          ${trades.slice().reverse().map(t => {
+            const pnl = t.pnl_usd || 0;
+            const cls = pnl > 0 ? 'positive' : 'negative';
+            return `<tr>
+              <td style="font-weight:600">${t.pair}</td>
+              <td><span class="signal-type ${t.direction?.toLowerCase()}" style="font-size:10px">${t.direction||'?'}</span></td>
+              <td class="mono">${t.entry_price}</td>
+              <td class="mono">${t.exit_price}</td>
+              <td class="${cls}" style="font-weight:600">${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}<br><span style="font-size:11px">${(t.pnl_pips||0) >= 0 ? '+' : ''}${(t.pnl_pips||0).toFixed(1)} pips</span></td>
+              <td style="font-size:11px">${(t.close_reason||'').replace(/_/g,' ')}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  // Monitoring
+  const events = (data.monitoring?.events) || [];
+  document.getElementById('monCount').textContent = events.length;
+  if (events.length === 0) {
+    document.getElementById('monitorContainer').innerHTML = '<div class="empty"><div class="empty-icon">🔍</div>No monitoring events</div>';
+  } else {
+    document.getElementById('monitorContainer').innerHTML = events.slice().reverse().slice(0, 50).map(ev => {
+      let icon = '✓', cls = '';
+      if (ev.type === 'STOP_LOSS') { icon = '🔴'; cls = 'negative'; }
+      else if (ev.type === 'TAKE_PROFIT') { icon = '🟢'; cls = 'positive'; }
+      else if (ev.type === 'FORCE_CLOSE') { icon = '⛔'; cls = 'negative'; }
+      else if (ev.type === 'CONFLUENCE_WARNING') { icon = '⚠️'; cls = ''; }
+      else if (ev.type === 'EVENING_CLOSE') { icon = '🌙'; }
+      else if (ev.type === 'CHECK') { icon = '📊'; }
+      else if (ev.type === 'NO_POSITIONS') { icon = '💤'; }
+
+      let msg = `${ev.pair || ''} `;
+      if (ev.type === 'CHECK') msg += `${ev.pnl_pips >= 0 ? '+' : ''}${ev.pnl_pips} pips | conf: ${ev.confluence_now}/${ev.confluence_entry}`;
+      else if (ev.type === 'CONFLUENCE_WARNING') msg += `conf dropped: ${ev.confluence_entry} → ${ev.confluence_now}`;
+      else if (ev.type === 'FORCE_CLOSE') msg += `CLOSED (conf: ${ev.confluence_now}) $${(ev.pnl_usd||0).toFixed(2)}`;
+      else if (ev.type === 'STOP_LOSS' || ev.type === 'TAKE_PROFIT') msg += `${ev.type.replace('_',' ')} $${(ev.pnl_usd||0).toFixed(2)}`;
+      else if (ev.type === 'EVENING_CLOSE') msg += ev.pnl_usd != null ? `closed $${ev.pnl_usd.toFixed(2)}` : (ev.message||'');
+      else msg += ev.message || ev.type.replace(/_/g, ' ');
+
+      return `<div class="monitor-event">
+        <div class="monitor-time">${formatTime(ev.time)}</div>
+        <div class="monitor-icon">${icon}</div>
+        <div class="monitor-msg ${cls}">${msg}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function renderMiniChart(history) {
+  if (!history.length) return '';
+  const vals = history.map(h => h.pnl_pips);
+  const max = Math.max(...vals.map(Math.abs), 1);
+  return `<div class="mini-chart">${vals.map(v => {
+    const h = Math.max(2, Math.abs(v) / max * 28);
+    const color = v >= 0 ? 'var(--green)' : 'var(--red)';
+    return `<div class="mini-bar" style="height:${h}px;background:${color}"></div>`;
+  }).join('')}</div>`;
+}
+
+function formatTime(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  } catch { return iso.slice(11, 19); }
+}
+
+function renderEmpty() {
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="card"><div class="label">Status</div><div class="value neutral">—</div><div class="sub">Run: python main.py simulate</div></div>
+  `;
+  document.getElementById('positionsContainer').innerHTML = '<div class="empty"><div class="empty-icon">🚀</div>Run a simulation to see data here</div>';
+  document.getElementById('signalsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📡</div>No data loaded</div>';
+  document.getElementById('tradesContainer').innerHTML = '';
+  document.getElementById('monitorContainer').innerHTML = '';
+}
+
+// Auto-refresh every 30 seconds
+document.getElementById('autoRefresh').addEventListener('change', function() {
+  if (this.checked) {
+    refreshInterval = setInterval(loadData, 30000);
+  } else {
+    clearInterval(refreshInterval);
+  }
+});
+
+// Initial load
+loadData();
+refreshInterval = setInterval(loadData, 30000);
+</script>
+</body>
+</html>

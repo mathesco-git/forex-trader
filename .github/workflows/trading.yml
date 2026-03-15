@@ -1,0 +1,87 @@
+name: Forex Trading Bot
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'simulate'
+        type: choice
+        options:
+          - scan
+          - monitor
+          - close
+          - simulate
+          - status
+
+  # Scheduled runs (all times UTC — Mattijs is CET/CEST = UTC+1/+2)
+  # Forex is 24/5: Sun 10 PM UTC → Fri 10 PM UTC
+  schedule:
+    # Morning scan: 8:00 AM CET = 07:00 UTC, weekdays
+    - cron: '0 7 * * 1-5'
+
+    # Monitoring: every 5 min, 24h on weekdays
+    # GitHub Actions minimum cron interval is 5 min
+    - cron: '*/5 * * * 1-5'
+
+    # Session close: 10:00 PM CET = 21:00 UTC, weekdays (safety sweep)
+    - cron: '0 21 * * 1-5'
+
+permissions:
+  contents: write
+
+env:
+  BROKER_MODE: mock
+  MOCK_SEED: 42
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Determine action
+        id: action
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "cmd=${{ github.event.inputs.action }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            HOUR=$(date -u +%H)
+            MINUTE=$(date -u +%M)
+
+            # 07:00 UTC = morning scan (8 AM CET)
+            if [ "$HOUR" = "07" ] && [ "$MINUTE" = "00" ]; then
+              echo "cmd=scan" >> $GITHUB_OUTPUT
+            # 21:00 UTC = session close (10 PM CET)
+            elif [ "$HOUR" = "21" ] && [ "$MINUTE" = "00" ]; then
+              echo "cmd=close" >> $GITHUB_OUTPUT
+            # Everything else = monitor
+            else
+              echo "cmd=monitor" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Run trading bot
+        run: python main.py ${{ steps.action.outputs.cmd }}
+
+      - name: Commit state changes
+        run: |
+          git config user.name "Forex Bot"
+          git config user.email "bot@forex-trader.local"
+          git add data/ dashboard/
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+          else
+            git commit -m "bot: ${{ steps.action.outputs.cmd }} — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi

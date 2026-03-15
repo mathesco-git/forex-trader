@@ -1,0 +1,173 @@
+{
+  "events": [
+    {
+      "time": "2026-03-15T22:51:36.872416+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:36.999363+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.124001+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.294411+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.476534+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.640610+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.770484+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:37.925050+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.044468+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.163570+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.300467+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.472603+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.609255+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.723963+00:00",
+      "type": "CHECK",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "price": 1.33607,
+      "confluence_now": 4,
+      "confluence_entry": 4,
+      "pnl_pips": -0.7,
+      "trailing_stop": false
+    },
+    {
+      "time": "2026-03-15T22:51:38.841781+00:00",
+      "type": "EVENING_CLOSE",
+      "pair": "GBP/USD",
+      "order_id": "MOCK-B51E9A87",
+      "entry_price": 1.336,
+      "exit_price": 1.33607,
+      "pnl_pips": -0.7,
+      "pnl_usd": -0.76
+    },
+    {
+      "time": "2026-03-15T23:01:04.670162+00:00",
+      "type": "NO_POSITIONS",
+      "message": "No open positions to monitor"
+    }
+  ]
+}

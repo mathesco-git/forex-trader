@@ -1,0 +1,5 @@
+# Forex Trading Bot
+# No external dependencies for mock mode — stdlib only!
+# Uncomment below when integrating OANDA API:
+# oandapyV20>=0.7.0
+# requests>=2.28.0
