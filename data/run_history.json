@@ -146,6 +146,16 @@
         "total_pnl_pips": 3.2,
         "total_pnl_usd": 4.37
       }
+    },
+    {
+      "time": "2026-03-16T07:51:06.418817+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
     }
   ]
 }

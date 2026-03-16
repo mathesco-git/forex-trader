@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-16T07:46:52.624900+00:00",
+  "generated_at": "2026-03-16T07:51:06.317129+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -481,6 +481,11 @@
         "exit_price": 0.78792,
         "pnl_pips": -1.6,
         "pnl_usd": -2.18
+      },
+      {
+        "time": "2026-03-16T07:51:05.335524+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
@@ -601,6 +606,35 @@
         "positions_closed": 1,
         "total_pnl_pips": -1.6,
         "total_pnl_usd": -2.18
+      }
+    },
+    {
+      "time": "2026-03-16T07:38:56.821721+00:00",
+      "action": "scan",
+      "summary": {
+        "pairs_analyzed": 5,
+        "signals_found": 1,
+        "positions_opened": 1,
+        "selected": [
+          "USD/CHF"
+        ]
+      }
+    },
+    {
+      "time": "2026-03-16T07:38:56.821979+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 1,
+        "closed": 0
+      }
+    },
+    {
+      "time": "2026-03-16T07:38:56.822313+00:00",
+      "action": "close",
+      "summary": {
+        "positions_closed": 1,
+        "total_pnl_pips": 3.2,
+        "total_pnl_usd": 4.37
       }
     }
   ]
