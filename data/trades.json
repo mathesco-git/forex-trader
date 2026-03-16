@@ -1,7 +1,7 @@
 {
   "trades": [
     {
-      "order_id": "MOCK-B5641E6E",
+      "order_id": "MOCK-3077DE04",
       "pair": "USD/CHF",
       "direction": "LONG",
       "entry_price": 0.78808,
@@ -11,11 +11,11 @@
       "confluence_at_entry": 4,
       "signal_strength": "MODERATE",
       "status": "OPEN",
-      "opened_at": "2026-03-16T07:29:42.370714",
-      "closed_at": "2026-03-16T07:29:42.402351+00:00",
-      "exit_price": 0.78789,
-      "pnl_pips": -1.9,
-      "pnl_usd": -2.59,
+      "opened_at": "2026-03-16T07:38:56.786936",
+      "closed_at": "2026-03-16T07:38:56.819334+00:00",
+      "exit_price": 0.7884,
+      "pnl_pips": 3.2,
+      "pnl_usd": 4.37,
       "close_reason": "EVENING_CLOSE",
       "entry_confluence": 4,
       "entry_confluence_detail": {
@@ -46,95 +46,95 @@
       },
       "monitoring_history": [
         {
-          "time": "2026-03-16T07:29:42.373794+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.790075+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.375522+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.791867+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.377309+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.793737+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.379115+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.795593+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.380964+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.797508+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.382828+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.799400+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.384721+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.801357+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.386733+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.803423+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.388692+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.805457+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.390686+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.807494+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.392713+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.809601+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.394827+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.811707+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.396944+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.813897+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         },
         {
-          "time": "2026-03-16T07:29:42.399131+00:00",
-          "price": 0.78789,
+          "time": "2026-03-16T07:38:56.816089+00:00",
+          "price": 0.7884,
           "confluence": 4,
-          "pnl_pips": -1.9
+          "pnl_pips": 3.2
         }
       ],
       "trailing_stop_active": false,
       "trailing_stop_price": null,
-      "last_check": "2026-03-16T07:29:42.399131+00:00",
+      "last_check": "2026-03-16T07:38:56.816089+00:00",
       "current_confluence": 4,
-      "current_pnl_pips": -1.9
+      "current_pnl_pips": 3.2
     }
   ]
 }

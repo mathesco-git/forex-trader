@@ -1,5 +1,5 @@
 {
-  "scan_time": "2026-03-16T07:29:42.368976+00:00",
+  "scan_time": "2026-03-16T07:38:56.785214+00:00",
   "signals": [
     {
       "pair": "EUR/USD",
@@ -21,11 +21,11 @@
         "McGINLEY: Falling & price below (1.17774)"
       ],
       "current_price": {
-        "bid": 1.15006,
-        "ask": 1.15032,
-        "mid": 1.15019,
-        "spread_pips": 2.6,
-        "timestamp": "2026-03-16T07:29:42.369411"
+        "bid": 1.15009,
+        "ask": 1.15037,
+        "mid": 1.15023,
+        "spread_pips": 2.9,
+        "timestamp": "2026-03-16T07:38:56.785629"
       }
     },
     {
@@ -41,11 +41,11 @@
         "Trend strength too low (17/100)"
       ],
       "current_price": {
-        "bid": 1.33879,
-        "ask": 1.33901,
-        "mid": 1.3389,
-        "spread_pips": 2.2,
-        "timestamp": "2026-03-16T07:29:42.369723"
+        "bid": 1.33875,
+        "ask": 1.33892,
+        "mid": 1.33883,
+        "spread_pips": 1.7,
+        "timestamp": "2026-03-16T07:38:56.785949"
       }
     },
     {
@@ -68,11 +68,11 @@
         "McGINLEY: Rising & price above (155.84385)"
       ],
       "current_price": {
-        "bid": 157.887,
-        "ask": 157.914,
-        "mid": 157.901,
-        "spread_pips": 2.7,
-        "timestamp": "2026-03-16T07:29:42.370023"
+        "bid": 157.953,
+        "ask": 157.979,
+        "mid": 157.966,
+        "spread_pips": 2.6,
+        "timestamp": "2026-03-16T07:38:56.786269"
       }
     },
     {
@@ -95,11 +95,11 @@
         "McGINLEY: Falling & price below (0.62822)"
       ],
       "current_price": {
-        "bid": 0.62147,
-        "ask": 0.62174,
-        "mid": 0.62161,
-        "spread_pips": 2.7,
-        "timestamp": "2026-03-16T07:29:42.370337"
+        "bid": 0.62168,
+        "ask": 0.62194,
+        "mid": 0.62181,
+        "spread_pips": 2.6,
+        "timestamp": "2026-03-16T07:38:56.786566"
       }
     },
     {
@@ -130,11 +130,11 @@
         "McGINLEY: Rising & price above (0.77908)"
       ],
       "current_price": {
-        "bid": 0.78777,
-        "ask": 0.78801,
-        "mid": 0.78789,
-        "spread_pips": 2.5,
-        "timestamp": "2026-03-16T07:29:42.370632"
+        "bid": 0.78832,
+        "ask": 0.78847,
+        "mid": 0.7884,
+        "spread_pips": 1.4,
+        "timestamp": "2026-03-16T07:38:56.786857"
       }
     }
   ]
