@@ -442,7 +442,7 @@ def cmd_simulate():
     # Generate dashboard data
     state.build_dashboard_data()
     print()
-    print("  Dashboard data updated → dashboard/dashboard_data.json")
+    print("  Dashboard data updated → docs/dashboard_data.json")
 
     return {
         "scan": scan_result,

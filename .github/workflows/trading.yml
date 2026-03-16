@@ -84,7 +84,7 @@ jobs:
         run: |
           git config user.name "Forex Bot"
           git config user.email "bot@forex-trader.local"
-          git add data/ dashboard/
+          git add data/ docs/
           # Only commit if there are changes
           if git diff --cached --quiet; then
             echo "No state changes to commit"

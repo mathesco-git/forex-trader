@@ -70,7 +70,7 @@ TRADES_FILE = os.path.join(DATA_DIR, "trades.json")
 SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
 MONITORING_FILE = os.path.join(DATA_DIR, "monitoring.json")
 RUN_HISTORY_FILE = os.path.join(DATA_DIR, "run_history.json")
-DASHBOARD_DATA_FILE = os.path.join(BASE_DIR, "dashboard", "dashboard_data.json")
+DASHBOARD_DATA_FILE = os.path.join(BASE_DIR, "docs", "dashboard_data.json")
 
 # =============================================================================
 # BROKER MODE
