@@ -21,6 +21,7 @@
   --yellow: #ffd43b;
   --yellow-bg: rgba(255,212,59,0.1);
   --purple: #b197fc;
+  --orange: #ff922b;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -41,10 +42,9 @@ header .status { display: flex; align-items: center; gap: 8px; font-size: 13px; 
 header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 .badge { background: var(--surface2); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--blue); }
-
-/* Summary cards */
+.badge.danger { color: var(--red); background: var(--red-bg); }
 .summary-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px; margin-bottom: 20px;
 }
 .card {
@@ -57,8 +57,6 @@ header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gre
 .positive { color: var(--green); }
 .negative { color: var(--red); }
 .neutral { color: var(--text-dim); }
-
-/* Sections */
 .section {
   background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
   padding: 20px 24px; margin-bottom: 20px;
@@ -71,8 +69,7 @@ header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gre
   background: var(--surface2); padding: 2px 8px; border-radius: 6px;
   font-size: 12px; color: var(--text-dim);
 }
-
-/* Signal cards */
+.chart-svg { width: 100%; overflow: visible; }
 .signal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
 .signal-card {
   background: var(--surface2); border-radius: 10px; padding: 16px;
@@ -91,24 +88,17 @@ header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gre
 .signal-type.long { background: var(--green-bg); color: var(--green); }
 .signal-type.short { background: var(--red-bg); color: var(--red); }
 .signal-type.no-trade { background: var(--surface); color: var(--text-dim); }
-.confluence-bar {
-  display: flex; gap: 3px; margin: 8px 0;
-}
-.confluence-dot {
-  width: 100%; height: 6px; border-radius: 3px; background: var(--surface);
-}
+.confluence-bar { display: flex; gap: 3px; margin: 8px 0; }
+.confluence-dot { width: 100%; height: 6px; border-radius: 3px; background: var(--surface); }
 .confluence-dot.active { background: var(--blue); }
 .confluence-dot.active.high { background: var(--green); }
 .signal-details { font-size: 12px; color: var(--text-dim); }
 .signal-trade {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
-  font-size: 12px;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px;
 }
 .signal-trade .label { color: var(--text-dim); }
 .signal-trade .val { font-weight: 600; font-family: 'SF Mono', 'Consolas', monospace; }
-
-/* Position cards */
 .position-card {
   background: var(--surface2); border-radius: 10px; padding: 16px; margin-bottom: 10px;
   border-left: 3px solid var(--blue);
@@ -121,8 +111,6 @@ header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gre
 }
 .position-meta .item .label { color: var(--text-dim); }
 .position-meta .item .val { font-weight: 600; font-family: 'SF Mono', 'Consolas', monospace; }
-
-/* Monitoring log */
 .monitor-timeline { max-height: 400px; overflow-y: auto; }
 .monitor-event {
   display: flex; gap: 12px; padding: 8px 0;
@@ -132,24 +120,21 @@ header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gre
 .monitor-time { color: var(--text-dim); min-width: 80px; font-family: 'SF Mono', monospace; font-size: 12px; }
 .monitor-icon { min-width: 20px; text-align: center; }
 .monitor-msg { flex: 1; }
-
-/* Trade history */
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { text-align: left; padding: 8px 12px; color: var(--text-dim); font-size: 11px;
      text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
 td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
 tr:hover td { background: var(--surface2); }
 .mono { font-family: 'SF Mono', 'Consolas', monospace; }
-
-/* Empty state */
 .empty { text-align: center; padding: 40px; color: var(--text-dim); }
 .empty-icon { font-size: 32px; margin-bottom: 8px; }
-
-/* Mini chart for monitoring */
 .mini-chart { display: flex; align-items: end; gap: 1px; height: 30px; }
 .mini-bar { width: 4px; border-radius: 1px; min-height: 2px; }
-
-/* Refresh controls */
+.bar-chart { display: flex; align-items: end; gap: 16px; height: 120px; padding: 10px 0; }
+.bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.bar { width: 36px; border-radius: 4px 4px 0 0; transition: height 0.3s; min-height: 2px; }
+.bar-label { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+.bar-value { font-size: 11px; font-weight: 600; margin-bottom: 4px; }
 .refresh-bar {
   display: flex; justify-content: space-between; align-items: center;
   padding: 8px 16px; background: var(--surface2); border-radius: 8px;
@@ -161,12 +146,35 @@ tr:hover td { background: var(--surface2); }
 }
 .refresh-bar button:hover { opacity: 0.85; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+.three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+.run-history { max-height: 320px; overflow-y: auto; }
+.run-row {
+  display: flex; align-items: baseline; gap: 10px; padding: 7px 0;
+  border-bottom: 1px solid var(--border); font-size: 13px;
+}
+.run-row:last-child { border-bottom: none; }
+.run-ts { color: var(--text-dim); font-family: 'SF Mono', monospace; font-size: 11px; white-space: nowrap; min-width: 130px; }
+.run-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 5px;
+  text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap;
+}
+.run-badge.scan    { background: var(--blue-bg);   color: var(--blue); }
+.run-badge.monitor { background: var(--yellow-bg); color: var(--yellow); }
+.run-badge.close   { background: var(--green-bg);  color: var(--green); }
+.run-badge.prognosis { background: rgba(177,151,252,0.15); color: var(--purple); }
+.run-badge.simulate  { background: var(--surface2); color: var(--text-dim); }
+.run-detail { flex: 1; color: var(--text-dim); }
+.circuit-breaker-banner {
+  background: var(--red-bg); border: 1px solid var(--red);
+  border-radius: 10px; padding: 12px 20px; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px; font-size: 14px;
+}
+.circuit-breaker-banner .icon { font-size: 20px; }
 </style>
 </head>
 <body>
 <div class="container">
-
 <header>
   <div>
     <h1>Forex Trading Bot</h1>
@@ -174,269 +182,315 @@ tr:hover td { background: var(--surface2); }
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
     <span class="badge">MOCK MODE</span>
-    <span class="badge" style="color:var(--purple)">v2.0</span>
+    <span class="badge" style="color:var(--purple)">v2.1</span>
   </div>
 </header>
-
 <div class="refresh-bar">
   <span>Last updated: <strong id="lastUpdated">—</strong></span>
   <div style="display:flex;gap:8px;align-items:center;">
-    <label style="font-size:12px;">Auto-refresh
-      <input type="checkbox" id="autoRefresh" checked>
-    </label>
+    <label style="font-size:12px;">Auto-refresh <input type="checkbox" id="autoRefresh" checked></label>
     <button onclick="loadData()">Refresh Now</button>
   </div>
 </div>
-
-<!-- Summary Cards -->
+<div class="circuit-breaker-banner" id="cbBanner" style="display:none">
+  <span class="icon">🛑</span>
+  <span id="cbMessage">Circuit breaker active</span>
+</div>
 <div class="summary-grid" id="summaryCards"></div>
-
-<!-- Open Positions -->
+<div class="three-col">
+  <div class="section"><h2>Equity Curve</h2><div id="equityChartContainer"></div></div>
+  <div class="section"><h2>P&L by Pair</h2><div id="pairPnlChart"></div></div>
+</div>
 <div class="section" id="positionsSection">
   <h2>Open Positions <span class="count" id="posCount">0</span></h2>
   <div id="positionsContainer"></div>
 </div>
-
-<!-- Signals -->
 <div class="section" id="signalsSection">
   <h2>Today's Signals <span class="count" id="sigCount">0</span></h2>
   <div class="signal-grid" id="signalsContainer"></div>
 </div>
-
 <div class="two-col">
-  <!-- Trade History -->
   <div class="section">
     <h2>Trade History <span class="count" id="tradeCount">0</span></h2>
     <div id="tradesContainer" style="max-height:400px;overflow-y:auto;"></div>
   </div>
-
-  <!-- Monitoring Log -->
   <div class="section">
     <h2>Monitoring Log <span class="count" id="monCount">0</span></h2>
     <div class="monitor-timeline" id="monitorContainer"></div>
   </div>
 </div>
-
+<div class="section">
+  <h2>Workflow Runs <span class="count" id="runCount">0</span></h2>
+  <div class="run-history" id="runHistoryContainer"></div>
 </div>
-
+</div>
 <script>
-const DATA_URL = 'dashboard_data.json';
-let refreshInterval = null;
+const DATA_URL='dashboard_data.json';
+let refreshInterval=null;
 
-async function loadData() {
-  try {
-    const resp = await fetch(DATA_URL + '?t=' + Date.now());
-    if (!resp.ok) throw new Error('No data file found');
-    const data = await resp.json();
+async function loadData(){
+  try{
+    const resp=await fetch(DATA_URL+'?t='+Date.now());
+    if(!resp.ok) throw new Error('No data');
+    const data=await resp.json();
     render(data);
-    document.getElementById('statusDot').style.background = 'var(--green)';
-    document.getElementById('statusText').textContent = 'Connected — Mock Mode';
-  } catch (e) {
-    document.getElementById('statusDot').style.background = 'var(--yellow)';
-    document.getElementById('statusText').textContent = 'No data — Run simulation first';
+    document.getElementById('statusDot').style.background='var(--green)';
+    document.getElementById('statusText').textContent='Connected — Mock Mode';
+  }catch(e){
+    document.getElementById('statusDot').style.background='var(--yellow)';
+    document.getElementById('statusText').textContent='No data — Run simulation first';
     renderEmpty();
   }
 }
 
-function render(data) {
-  const s = data.summary || {};
-  document.getElementById('lastUpdated').textContent = formatTime(data.generated_at);
+function render(data){
+  const s=data.summary||{};
+  document.getElementById('lastUpdated').textContent=formatTime(data.generated_at);
 
-  // Summary cards
-  const pnlClass = s.total_pnl_usd > 0 ? 'positive' : s.total_pnl_usd < 0 ? 'negative' : 'neutral';
-  document.getElementById('summaryCards').innerHTML = `
-    <div class="card">
-      <div class="label">Total P&L</div>
-      <div class="value ${pnlClass}">$${s.total_pnl_usd >= 0 ? '+' : ''}${(s.total_pnl_usd||0).toFixed(2)}</div>
-      <div class="sub">${s.total_trades||0} trades completed</div>
-    </div>
-    <div class="card">
-      <div class="label">Win Rate</div>
+  const cbBanner=document.getElementById('cbBanner');
+  if(s.circuit_breaker_active){
+    cbBanner.style.display='flex';
+    document.getElementById('cbMessage').textContent=
+      `Circuit breaker active — Daily loss: $${(s.daily_pnl||0).toFixed(2)} (limit: $${(s.circuit_breaker_threshold||0).toFixed(2)}). Trading halted.`;
+  }else{cbBanner.style.display='none';}
+
+  const pnlClass=s.total_pnl_usd>0?'positive':s.total_pnl_usd<0?'negative':'neutral';
+  const dailyClass=(s.daily_pnl||0)>0?'positive':(s.daily_pnl||0)<0?'negative':'neutral';
+  document.getElementById('summaryCards').innerHTML=`
+    <div class="card"><div class="label">Total P&L</div>
+      <div class="value ${pnlClass}">$${s.total_pnl_usd>=0?'+':''}${(s.total_pnl_usd||0).toFixed(2)}</div>
+      <div class="sub">${s.total_trades||0} trades completed</div></div>
+    <div class="card"><div class="label">Win Rate</div>
       <div class="value">${(s.win_rate||0).toFixed(1)}%</div>
-      <div class="sub">${s.wins||0}W / ${s.losses||0}L</div>
-    </div>
-    <div class="card">
-      <div class="label">Open Positions</div>
+      <div class="sub">${s.wins||0}W / ${s.losses||0}L</div></div>
+    <div class="card"><div class="label">Open Positions</div>
       <div class="value" style="color:var(--blue)">${s.open_positions||0}</div>
-      <div class="sub">Max 3 simultaneous</div>
-    </div>
-    <div class="card">
-      <div class="label">Capital</div>
-      <div class="value">$${(10000 + (s.total_pnl_usd||0)).toFixed(0)}</div>
-      <div class="sub">${s.total_pnl_usd >= 0 ? '+' : ''}${((s.total_pnl_usd||0)/100).toFixed(2)}% return</div>
-    </div>
-  `;
+      <div class="sub">Max 3 simultaneous</div></div>
+    <div class="card"><div class="label">Capital</div>
+      <div class="value">$${(10000+(s.total_pnl_usd||0)).toFixed(0)}</div>
+      <div class="sub">${s.total_pnl_usd>=0?'+':''}${((s.total_pnl_usd||0)/100).toFixed(2)}% return</div></div>
+    <div class="card"><div class="label">Daily P&L</div>
+      <div class="value ${dailyClass}">$${(s.daily_pnl||0)>=0?'+':''}${(s.daily_pnl||0).toFixed(2)}</div>
+      <div class="sub">${s.circuit_breaker_active?'🛑 Circuit breaker':'Limit: $'+(s.circuit_breaker_threshold||0).toFixed(0)}</div></div>`;
 
-  // Positions
-  const positions = (data.positions?.positions) || [];
-  document.getElementById('posCount').textContent = positions.length;
-  if (positions.length === 0) {
-    document.getElementById('positionsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📊</div>No open positions</div>';
-  } else {
-    document.getElementById('positionsContainer').innerHTML = positions.map(p => {
-      const pnl = p.current_pnl_pips || 0;
-      const pnlClass = pnl > 0 ? 'positive' : pnl < 0 ? 'negative' : 'neutral';
-      const monHist = (p.monitoring_history || []).slice(-12);
-      const miniChart = monHist.length > 1 ? renderMiniChart(monHist) : '';
-      return `
-        <div class="position-card">
-          <div class="position-header">
-            <div>
-              <span style="font-weight:700;font-size:16px">${p.pair}</span>
-              <span class="signal-type ${p.direction?.toLowerCase()}">${p.direction}</span>
-              ${p.trailing_stop_active ? '<span class="badge" style="color:var(--yellow)">TRAILING</span>' : ''}
-            </div>
-            <div class="position-pnl ${pnlClass}">${pnl >= 0 ? '+' : ''}${pnl.toFixed(1)} pips</div>
-          </div>
-          <div class="position-meta">
-            <div class="item"><div class="label">Entry</div><div class="val mono">${p.entry_price}</div></div>
-            <div class="item"><div class="label">Stop Loss</div><div class="val mono" style="color:var(--red)">${p.stop_loss}</div></div>
-            <div class="item"><div class="label">Take Profit</div><div class="val mono" style="color:var(--green)">${p.take_profit}</div></div>
-            <div class="item"><div class="label">Confluence</div><div class="val">${p.current_confluence || p.entry_confluence || '?'}/8</div></div>
-            <div class="item"><div class="label">Units</div><div class="val mono">${(p.units||0).toLocaleString()}</div></div>
-            <div class="item"><div class="label">Order ID</div><div class="val mono" style="font-size:10px">${p.order_id}</div></div>
-          </div>
-          ${miniChart ? `<div style="margin-top:10px">${miniChart}</div>` : ''}
-        </div>`;
+  renderEquityCurve(data.equity_curve||[]);
+  renderPairPnl(data.pair_pnl||{});
+  renderRunHistory(data.run_history||[]);
+
+  const positions=(data.positions?.positions)||[];
+  document.getElementById('posCount').textContent=positions.length;
+  if(!positions.length){
+    document.getElementById('positionsContainer').innerHTML='<div class="empty"><div class="empty-icon">📊</div>No open positions</div>';
+  }else{
+    document.getElementById('positionsContainer').innerHTML=positions.map(p=>{
+      const pnl=p.current_pnl_pips||0;
+      const pnlClass=pnl>0?'positive':pnl<0?'negative':'neutral';
+      const monHist=(p.monitoring_history||[]).slice(-12);
+      const miniChart=monHist.length>1?renderMiniChart(monHist):'';
+      return `<div class="position-card"><div class="position-header"><div>
+        <span style="font-weight:700;font-size:16px">${p.pair}</span>
+        <span class="signal-type ${p.direction?.toLowerCase()}">${p.direction}</span>
+        ${p.trailing_stop_active?'<span class="badge" style="color:var(--yellow)">TRAILING</span>':''}
+        </div><div class="position-pnl ${pnlClass}">${pnl>=0?'+':''}${pnl.toFixed(1)} pips</div></div>
+        <div class="position-meta">
+          <div class="item"><div class="label">Entry</div><div class="val mono">${p.entry_price}</div></div>
+          <div class="item"><div class="label">Stop Loss</div><div class="val mono" style="color:var(--red)">${p.stop_loss}</div></div>
+          <div class="item"><div class="label">Take Profit</div><div class="val mono" style="color:var(--green)">${p.take_profit}</div></div>
+          <div class="item"><div class="label">Confluence</div><div class="val">${p.current_confluence||p.entry_confluence||'?'}/8</div></div>
+          <div class="item"><div class="label">Units</div><div class="val mono">${(p.units||0).toLocaleString()}</div></div>
+          <div class="item"><div class="label">Order ID</div><div class="val mono" style="font-size:10px">${p.order_id}</div></div>
+        </div>${miniChart?`<div style="margin-top:10px">${miniChart}</div>`:''}</div>`;
     }).join('');
   }
 
-  // Signals
-  const signals = (data.signals?.signals) || [];
-  document.getElementById('sigCount').textContent = signals.length;
-  if (signals.length === 0) {
-    document.getElementById('signalsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📡</div>No signals yet — run morning scan</div>';
-  } else {
-    document.getElementById('signalsContainer').innerHTML = signals.map(sig => {
-      const dir = sig.direction?.toLowerCase() || 'no-trade';
-      const cc = sig.confluence_count || 0;
-      const isHigh = cc >= 6;
-      return `
-        <div class="signal-card ${dir}">
-          <div class="signal-header">
-            <span class="signal-pair">${sig.pair}</span>
-            <span class="signal-type ${dir}">${sig.signal}</span>
-          </div>
-          <div class="confluence-bar">
-            ${Array.from({length:8}, (_,i) =>
-              `<div class="confluence-dot ${i < cc ? 'active' : ''} ${i < cc && isHigh ? 'high' : ''}"></div>`
-            ).join('')}
-          </div>
-          <div class="signal-details">
-            Trend: ${sig.trend} (${(sig.trend_strength||0).toFixed(0)}/100)
-            ${sig.reason ? `<br>${sig.reason}` : ''}
-          </div>
-          ${sig.trade ? `
-            <div class="signal-trade">
-              <div><div class="label">Entry</div><div class="val mono">${sig.trade.entry}</div></div>
-              <div><div class="label">SL (${sig.trade.sl_pips} pips)</div><div class="val mono" style="color:var(--red)">${sig.trade.stop_loss?.toFixed(5)||sig.trade.stop_loss}</div></div>
-              <div><div class="label">TP (${sig.trade.tp1_pips} pips)</div><div class="val mono" style="color:var(--green)">${sig.trade.tp1?.toFixed(5)||sig.trade.tp1}</div></div>
-            </div>
-          ` : ''}
-        </div>`;
+  const signals=(data.signals?.signals)||[];
+  document.getElementById('sigCount').textContent=signals.length;
+  if(!signals.length){
+    document.getElementById('signalsContainer').innerHTML='<div class="empty"><div class="empty-icon">📡</div>No signals yet — run morning scan</div>';
+  }else{
+    document.getElementById('signalsContainer').innerHTML=signals.map(sig=>{
+      const dir=sig.direction?.toLowerCase()||'no-trade';
+      const cc=sig.confluence_count||0;
+      const isHigh=cc>=6;
+      return `<div class="signal-card ${dir}"><div class="signal-header">
+        <span class="signal-pair">${sig.pair}</span>
+        <span class="signal-type ${dir}">${sig.signal}</span></div>
+        <div class="confluence-bar">${Array.from({length:8},(_,i)=>
+          `<div class="confluence-dot ${i<cc?'active':''} ${i<cc&&isHigh?'high':''}"></div>`).join('')}</div>
+        <div class="signal-details">Trend: ${sig.trend} (${(sig.trend_strength||0).toFixed(0)}/100)${sig.reason?`<br>${sig.reason}`:''}</div>
+        ${sig.trade?`<div class="signal-trade">
+          <div><div class="label">Entry</div><div class="val mono">${sig.trade.entry}</div></div>
+          <div><div class="label">SL (${sig.trade.sl_pips}p)</div><div class="val mono" style="color:var(--red)">${sig.trade.stop_loss?.toFixed(5)||sig.trade.stop_loss}</div></div>
+          <div><div class="label">TP (${sig.trade.tp1_pips}p)</div><div class="val mono" style="color:var(--green)">${sig.trade.tp1?.toFixed(5)||sig.trade.tp1}</div></div>
+        </div>`:''}</div>`;
     }).join('');
   }
 
-  // Trade history
-  const trades = (data.trades?.trades) || [];
-  document.getElementById('tradeCount').textContent = trades.length;
-  if (trades.length === 0) {
-    document.getElementById('tradesContainer').innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No trades yet</div>';
-  } else {
-    document.getElementById('tradesContainer').innerHTML = `
-      <table>
-        <thead><tr><th>Pair</th><th>Dir</th><th>Entry</th><th>Exit</th><th>P&L</th><th>Reason</th></tr></thead>
-        <tbody>
-          ${trades.slice().reverse().map(t => {
-            const pnl = t.pnl_usd || 0;
-            const cls = pnl > 0 ? 'positive' : 'negative';
-            return `<tr>
-              <td style="font-weight:600">${t.pair}</td>
-              <td><span class="signal-type ${t.direction?.toLowerCase()}" style="font-size:10px">${t.direction||'?'}</span></td>
-              <td class="mono">${t.entry_price}</td>
-              <td class="mono">${t.exit_price}</td>
-              <td class="${cls}" style="font-weight:600">${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}<br><span style="font-size:11px">${(t.pnl_pips||0) >= 0 ? '+' : ''}${(t.pnl_pips||0).toFixed(1)} pips</span></td>
-              <td style="font-size:11px">${(t.close_reason||'').replace(/_/g,' ')}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>`;
+  const trades=(data.trades?.trades)||[];
+  document.getElementById('tradeCount').textContent=trades.length;
+  if(!trades.length){
+    document.getElementById('tradesContainer').innerHTML='<div class="empty"><div class="empty-icon">📋</div>No trades yet</div>';
+  }else{
+    document.getElementById('tradesContainer').innerHTML=`<table><thead><tr><th>Pair</th><th>Dir</th><th>Entry</th><th>Exit</th><th>P&L</th><th>Reason</th></tr></thead><tbody>
+      ${trades.slice().reverse().map(t=>{
+        const pnl=t.pnl_usd||0;const cls=pnl>0?'positive':'negative';
+        return `<tr><td style="font-weight:600">${t.pair}</td>
+          <td><span class="signal-type ${t.direction?.toLowerCase()}" style="font-size:10px">${t.direction||'?'}</span></td>
+          <td class="mono">${t.entry_price}</td><td class="mono">${t.exit_price}</td>
+          <td class="${cls}" style="font-weight:600">${pnl>=0?'+':''}$${pnl.toFixed(2)}<br><span style="font-size:11px">${(t.pnl_pips||0)>=0?'+':''}${(t.pnl_pips||0).toFixed(1)}p</span></td>
+          <td style="font-size:11px">${(t.close_reason||'').replace(/_/g,' ')}</td></tr>`;
+      }).join('')}</tbody></table>`;
   }
 
-  // Monitoring
-  const events = (data.monitoring?.events) || [];
-  document.getElementById('monCount').textContent = events.length;
-  if (events.length === 0) {
-    document.getElementById('monitorContainer').innerHTML = '<div class="empty"><div class="empty-icon">🔍</div>No monitoring events</div>';
-  } else {
-    document.getElementById('monitorContainer').innerHTML = events.slice().reverse().slice(0, 50).map(ev => {
-      let icon = '✓', cls = '';
-      if (ev.type === 'STOP_LOSS') { icon = '🔴'; cls = 'negative'; }
-      else if (ev.type === 'TAKE_PROFIT') { icon = '🟢'; cls = 'positive'; }
-      else if (ev.type === 'FORCE_CLOSE') { icon = '⛔'; cls = 'negative'; }
-      else if (ev.type === 'CONFLUENCE_WARNING') { icon = '⚠️'; cls = ''; }
-      else if (ev.type === 'EVENING_CLOSE') { icon = '🌙'; }
-      else if (ev.type === 'CHECK') { icon = '📊'; }
-      else if (ev.type === 'NO_POSITIONS') { icon = '💤'; }
-
-      let msg = `${ev.pair || ''} `;
-      if (ev.type === 'CHECK') msg += `${ev.pnl_pips >= 0 ? '+' : ''}${ev.pnl_pips} pips | conf: ${ev.confluence_now}/${ev.confluence_entry}`;
-      else if (ev.type === 'CONFLUENCE_WARNING') msg += `conf dropped: ${ev.confluence_entry} → ${ev.confluence_now}`;
-      else if (ev.type === 'FORCE_CLOSE') msg += `CLOSED (conf: ${ev.confluence_now}) $${(ev.pnl_usd||0).toFixed(2)}`;
-      else if (ev.type === 'STOP_LOSS' || ev.type === 'TAKE_PROFIT') msg += `${ev.type.replace('_',' ')} $${(ev.pnl_usd||0).toFixed(2)}`;
-      else if (ev.type === 'EVENING_CLOSE') msg += ev.pnl_usd != null ? `closed $${ev.pnl_usd.toFixed(2)}` : (ev.message||'');
-      else msg += ev.message || ev.type.replace(/_/g, ' ');
-
-      return `<div class="monitor-event">
-        <div class="monitor-time">${formatTime(ev.time)}</div>
-        <div class="monitor-icon">${icon}</div>
-        <div class="monitor-msg ${cls}">${msg}</div>
-      </div>`;
+  const events=(data.monitoring?.events)||[];
+  document.getElementById('monCount').textContent=events.length;
+  if(!events.length){
+    document.getElementById('monitorContainer').innerHTML='<div class="empty"><div class="empty-icon">🔍</div>No monitoring events</div>';
+  }else{
+    document.getElementById('monitorContainer').innerHTML=events.slice().reverse().slice(0,50).map(ev=>{
+      let icon='✓',cls='';
+      if(ev.type==='STOP_LOSS'){icon='🔴';cls='negative';}
+      else if(ev.type==='TAKE_PROFIT'){icon='🟢';cls='positive';}
+      else if(ev.type==='FORCE_CLOSE'){icon='⛔';cls='negative';}
+      else if(ev.type==='CONFLUENCE_WARNING'){icon='⚠️';}
+      else if(ev.type==='EVENING_CLOSE'){icon='🌙';}
+      else if(ev.type==='CHECK'){icon='📊';}
+      else if(ev.type==='NO_POSITIONS'){icon='💤';}
+      else if(ev.type==='CIRCUIT_BREAKER'){icon='🛑';cls='negative';}
+      let msg=`${ev.pair||''} `;
+      if(ev.type==='CHECK')msg+=`${ev.pnl_pips>=0?'+':''}${ev.pnl_pips}p | conf: ${ev.confluence_now}/${ev.confluence_entry}`;
+      else if(ev.type==='CONFLUENCE_WARNING')msg+=`conf dropped: ${ev.confluence_entry} → ${ev.confluence_now}`;
+      else if(ev.type==='FORCE_CLOSE')msg+=`CLOSED (conf: ${ev.confluence_now}) $${(ev.pnl_usd||0).toFixed(2)}`;
+      else if(ev.type==='STOP_LOSS'||ev.type==='TAKE_PROFIT')msg+=`${ev.type.replace('_',' ')} $${(ev.pnl_usd||0).toFixed(2)}`;
+      else if(ev.type==='EVENING_CLOSE')msg+=ev.pnl_usd!=null?`closed $${ev.pnl_usd.toFixed(2)}`:(ev.message||'');
+      else if(ev.type==='CIRCUIT_BREAKER')msg=ev.message||'Circuit breaker triggered';
+      else msg+=ev.message||ev.type.replace(/_/g,' ');
+      return `<div class="monitor-event"><div class="monitor-time">${formatTime(ev.time)}</div><div class="monitor-icon">${icon}</div><div class="monitor-msg ${cls}">${msg}</div></div>`;
     }).join('');
   }
 }
 
-function renderMiniChart(history) {
-  if (!history.length) return '';
-  const vals = history.map(h => h.pnl_pips);
-  const max = Math.max(...vals.map(Math.abs), 1);
-  return `<div class="mini-chart">${vals.map(v => {
-    const h = Math.max(2, Math.abs(v) / max * 28);
-    const color = v >= 0 ? 'var(--green)' : 'var(--red)';
+function renderEquityCurve(curve){
+  const c=document.getElementById('equityChartContainer');
+  if(!curve||curve.length<2){c.innerHTML='<div class="empty" style="padding:20px"><div class="empty-icon">📈</div>Run a simulation to see the equity curve</div>';return;}
+  const w=800,h=180,pad={t:10,r:20,b:30,l:60};
+  const pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+  const equities=curve.map(c=>c.equity);
+  const minE=Math.min(...equities)-10,maxE=Math.max(...equities)+10;
+  const rangeE=maxE-minE||1;
+  const scaleX=i=>pad.l+(i/(curve.length-1))*pw;
+  const scaleY=v=>pad.t+ph-((v-minE)/rangeE)*ph;
+  let linePath=curve.map((c,i)=>`${i===0?'M':'L'} ${scaleX(i).toFixed(1)} ${scaleY(c.equity).toFixed(1)}`).join(' ');
+  let areaPath=linePath+` L ${scaleX(curve.length-1).toFixed(1)} ${scaleY(minE).toFixed(1)} L ${scaleX(0).toFixed(1)} ${scaleY(minE).toFixed(1)} Z`;
+  const dots=curve.slice(1).map((c,i)=>{
+    const color=c.pnl_usd>=0?'var(--green)':'var(--red)';
+    return `<circle cx="${scaleX(i+1).toFixed(1)}" cy="${scaleY(c.equity).toFixed(1)}" r="4" fill="${color}" stroke="var(--surface)" stroke-width="1.5"><title>${c.pair}: $${(c.pnl_usd||0).toFixed(2)} → $${c.equity.toFixed(2)}</title></circle>`;
+  }).join('');
+  const ySteps=4;
+  const yLabels=Array.from({length:ySteps+1},(_,i)=>{
+    const v=minE+(rangeE/ySteps)*i;
+    return `<text x="${pad.l-8}" y="${scaleY(v).toFixed(1)}" text-anchor="end" font-size="10" fill="var(--text-dim)" dominant-baseline="middle">$${v.toFixed(0)}</text><line x1="${pad.l}" y1="${scaleY(v).toFixed(1)}" x2="${w-pad.r}" y2="${scaleY(v).toFixed(1)}" stroke="var(--border)" stroke-dasharray="3"/>`;
+  }).join('');
+  const baselineY=scaleY(10000);
+  const baseline=(minE<=10000&&maxE>=10000)?`<line x1="${pad.l}" y1="${baselineY.toFixed(1)}" x2="${w-pad.r}" y2="${baselineY.toFixed(1)}" stroke="var(--text-dim)" stroke-dasharray="6" opacity="0.4"/>`:''
+  c.innerHTML=`<svg viewBox="0 0 ${w} ${h}" class="chart-svg">${yLabels}${baseline}<path d="${areaPath}" fill="url(#eqGrad)" opacity="0.3"/><path d="${linePath}" fill="none" stroke="var(--blue)" stroke-width="2"/>${dots}<defs><linearGradient id="eqGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--blue)" stop-opacity="0.4"/><stop offset="100%" stop-color="var(--blue)" stop-opacity="0"/></linearGradient></defs></svg>`;
+}
+
+function renderPairPnl(pairPnl){
+  const c=document.getElementById('pairPnlChart');
+  const entries=Object.entries(pairPnl);
+  if(!entries.length){c.innerHTML='<div class="empty" style="padding:20px"><div class="empty-icon">📊</div>No pair data</div>';return;}
+  const maxAbs=Math.max(...entries.map(([,v])=>Math.abs(v)),1);
+  c.innerHTML=`<div class="bar-chart">${entries.map(([pair,pnl])=>{
+    const h=Math.max(4,(Math.abs(pnl)/maxAbs)*100);
+    const color=pnl>=0?'var(--green)':'var(--red)';
+    const cls=pnl>=0?'positive':'negative';
+    return `<div class="bar-group"><div class="bar-value ${cls}">$${pnl>=0?'+':''}${pnl.toFixed(0)}</div><div class="bar" style="height:${h}px;background:${color}"></div><div class="bar-label">${pair.split('/')[0]}</div></div>`;
+  }).join('')}</div>`;
+}
+
+function renderMiniChart(history){
+  if(!history.length)return'';
+  const vals=history.map(h=>h.pnl_pips);
+  const max=Math.max(...vals.map(Math.abs),1);
+  return `<div class="mini-chart">${vals.map(v=>{
+    const h=Math.max(2,Math.abs(v)/max*28);
+    const color=v>=0?'var(--green)':'var(--red)';
     return `<div class="mini-bar" style="height:${h}px;background:${color}"></div>`;
   }).join('')}</div>`;
 }
 
-function formatTime(iso) {
-  if (!iso) return '—';
-  try {
-    const d = new Date(iso);
-    return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  } catch { return iso.slice(11, 19); }
-}
-
-function renderEmpty() {
-  document.getElementById('summaryCards').innerHTML = `
-    <div class="card"><div class="label">Status</div><div class="value neutral">—</div><div class="sub">Run: python main.py simulate</div></div>
-  `;
-  document.getElementById('positionsContainer').innerHTML = '<div class="empty"><div class="empty-icon">🚀</div>Run a simulation to see data here</div>';
-  document.getElementById('signalsContainer').innerHTML = '<div class="empty"><div class="empty-icon">📡</div>No data loaded</div>';
-  document.getElementById('tradesContainer').innerHTML = '';
-  document.getElementById('monitorContainer').innerHTML = '';
-}
-
-// Auto-refresh every 30 seconds
-document.getElementById('autoRefresh').addEventListener('change', function() {
-  if (this.checked) {
-    refreshInterval = setInterval(loadData, 30000);
-  } else {
-    clearInterval(refreshInterval);
+function renderRunHistory(runs){
+  const el=document.getElementById('runHistoryContainer');
+  document.getElementById('runCount').textContent=runs.length;
+  if(!runs.length){
+    el.innerHTML='<div class="empty"><div class="empty-icon">⏱️</div>No workflow runs recorded yet</div>';
+    return;
   }
-});
+  el.innerHTML=runs.slice().reverse().map(r=>{
+    const action=(r.action||'unknown').toLowerCase();
+    const s=r.summary||{};
+    let detail='';
+    if(action==='scan'){
+      const opened=s.positions_opened||0;
+      const found=s.signals_found||0;
+      if(s.circuit_breaker) detail='⛔ Circuit breaker — scan blocked';
+      else detail=`${found} signal${found!==1?'s':''} found, ${opened} position${opened!==1?'s':''} opened`;
+    } else if(action==='monitor'){
+      const checked=s.positions_checked||0;
+      const closed=s.closed||0;
+      if(s.circuit_breaker) detail=`⛔ Circuit breaker — force-closed ${closed} position${closed!==1?'s':''}`;
+      else detail=`${checked} position${checked!==1?'s':''} checked, ${closed} closed`;
+    } else if(action==='close'){
+      const n=s.positions_closed||0;
+      const pnl=s.total_pnl_usd;
+      detail=`${n} position${n!==1?'s':''} closed`;
+      if(pnl!=null) detail+=` — $${pnl>=0?'+':''}${pnl.toFixed(2)}`;
+    } else if(action==='prognosis'){
+      const n=s.open_positions||0;
+      const recs=s.recommendations||{};
+      const parts=Object.entries(recs).map(([k,v])=>`${v}×${k}`);
+      detail=`${n} open position${n!==1?'s':''}${parts.length?' — '+parts.join(', '):''}`;
+    } else if(action==='simulate'){
+      detail=s.message||'simulation run';
+    }
+    return `<div class="run-row">
+      <div class="run-ts">${formatDateTime(r.time)}</div>
+      <div class="run-badge ${action}">${action}</div>
+      <div class="run-detail">${detail||'completed'}</div>
+    </div>`;
+  }).join('');
+}
 
-// Initial load
+function formatTime(iso){
+  if(!iso)return'—';
+  try{const d=new Date(iso);return d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+  catch{return iso.slice(11,19);}
+}
+
+function formatDateTime(iso){
+  if(!iso)return'—';
+  try{
+    const d=new Date(iso);
+    const date=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    const time=d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
+    return `${date} ${time}`;
+  }catch{return iso.slice(0,16).replace('T',' ');}
+}
+
+function renderEmpty(){
+  document.getElementById('summaryCards').innerHTML='<div class="card"><div class="label">Status</div><div class="value neutral">—</div><div class="sub">Run: python main.py simulate</div></div>';
+  document.getElementById('positionsContainer').innerHTML='<div class="empty"><div class="empty-icon">🚀</div>Run a simulation to see data here</div>';
+  document.getElementById('signalsContainer').innerHTML='<div class="empty"><div class="empty-icon">📡</div>No data loaded</div>';
+  ['tradesContainer','monitorContainer','equityChartContainer','pairPnlChart','runHistoryContainer'].forEach(id=>document.getElementById(id).innerHTML='');
+  document.getElementById('runCount').textContent='0';
+}
+
+document.getElementById('autoRefresh').addEventListener('change',function(){
+  if(this.checked){refreshInterval=setInterval(loadData,30000);}else{clearInterval(refreshInterval);}
+});
 loadData();
-refreshInterval = setInterval(loadData, 30000);
+refreshInterval=setInterval(loadData,30000);
 </script>
 </body>
 </html>

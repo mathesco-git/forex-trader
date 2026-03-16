@@ -15,7 +15,7 @@ from app import engine, state
 from app.config import (
     PIP_VALUES, CONFLUENCE_WARNING_DROP, CONFLUENCE_FORCE_CLOSE,
     TRAILING_STOP_ACTIVATION_PIPS, TRAILING_STOP_DISTANCE_PIPS,
-    MAX_HOLD_HOURS,
+    MAX_HOLD_HOURS, MAX_DAILY_LOSS_PCT,
 )
 
 
@@ -30,8 +30,55 @@ def monitor_positions(data_feed, broker):
       - closed_positions: list of positions that were closed
     """
     check_time = datetime.now(timezone.utc).isoformat()
+
+    # Circuit breaker — if daily loss limit hit, close ALL positions immediately
+    is_tripped, daily_pnl, threshold = state.check_circuit_breaker()
+
     positions_data = state.load_positions()
     positions = positions_data.get("positions", [])
+
+    if is_tripped and positions:
+        actions = []
+        closed_positions = []
+        for pos in list(positions):
+            pair = pos["pair"]
+            order_id = pos["order_id"]
+            price_data = data_feed.get_current_price(pair)
+            current_price = price_data["mid"]
+            close_result = broker.close_position(order_id, current_price, "CIRCUIT_BREAKER")
+            if close_result and close_result.get("status") == "CLOSED":
+                trade_record = {
+                    **pos,
+                    "exit_price": current_price,
+                    "pnl_pips": close_result["pnl_pips"],
+                    "pnl_usd": close_result["pnl_usd"],
+                    "close_reason": "CIRCUIT_BREAKER",
+                    "closed_at": check_time,
+                }
+                state.save_trade(trade_record)
+                state.remove_position(order_id)
+                actions.append({
+                    "type": "CIRCUIT_BREAKER",
+                    "pair": pair,
+                    "order_id": order_id,
+                    "pnl_pips": close_result["pnl_pips"],
+                    "pnl_usd": close_result["pnl_usd"],
+                })
+                closed_positions.append(trade_record)
+        event = {
+            "time": check_time,
+            "type": "CIRCUIT_BREAKER",
+            "message": f"Daily loss limit hit (${daily_pnl:.2f}). Closed {len(closed_positions)} position(s).",
+        }
+        state.save_monitoring_event(event)
+        state.build_dashboard_data()
+        return {
+            "check_time": check_time,
+            "positions_checked": len(positions),
+            "actions": actions,
+            "closed_positions": closed_positions,
+            "circuit_breaker": True,
+        }
 
     if not positions:
         event = {

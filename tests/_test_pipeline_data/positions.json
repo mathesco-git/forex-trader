@@ -1,0 +1,121 @@
+{
+  "updated_at": "2026-03-15T22:49:30.317155+00:00",
+  "positions": [
+    {
+      "order_id": "MOCK-5BF73C83",
+      "pair": "GBP/USD",
+      "direction": "SHORT",
+      "entry_price": 1.336,
+      "stop_loss": 1.3451976655375861,
+      "take_profit": 1.3286418675699312,
+      "units": 10871,
+      "confluence_at_entry": 4,
+      "signal_strength": "MODERATE",
+      "status": "OPEN",
+      "opened_at": "2026-03-15T22:49:29.961677",
+      "closed_at": null,
+      "exit_price": null,
+      "pnl_pips": null,
+      "pnl_usd": null,
+      "close_reason": null,
+      "entry_confluence": 4,
+      "entry_confluence_detail": {
+        "trend_alignment": true,
+        "rsi_confirmation": false,
+        "stochastic_confirmation": false,
+        "macd_confirmation": true,
+        "bollinger_position": false,
+        "candlestick_pattern": true,
+        "zone_proximity": false,
+        "mcginley_confirmation": true
+      },
+      "entry_trend": "STRONG_DOWN",
+      "entry_trend_strength": 36.5448504983386,
+      "entry_indicators": {
+        "sma_10": 1.33868,
+        "sma_20": 1.3404150000000001,
+        "ema_9": 1.3380938858235478,
+        "ema_21": 1.3421318708998493,
+        "rsi": 22.335628525670785,
+        "stoch_k": 26.92307692307758,
+        "stoch_d": 26.487892438926462,
+        "mcginley": 1.3434952974886352,
+        "atr": 0.006131777025057327,
+        "bb_upper": 1.347588639243787,
+        "bb_lower": 1.3332413607562132,
+        "macd_hist": 0.0006731414105346761
+      },
+      "monitoring_history": [
+        {
+          "time": "2026-03-15T22:49:30.249564+00:00",
+          "price": 1.33603,
+          "confluence": 4,
+          "pnl_pips": -0.3
+        }
+      ],
+      "trailing_stop_active": false,
+      "trailing_stop_price": null,
+      "last_check": "2026-03-15T22:49:30.249564+00:00",
+      "current_confluence": 4,
+      "current_pnl_pips": -0.3
+    },
+    {
+      "order_id": "MOCK-C9591717",
+      "pair": "GBP/USD",
+      "direction": "SHORT",
+      "entry_price": 1.336,
+      "stop_loss": 1.3451976655375861,
+      "take_profit": 1.3286418675699312,
+      "units": 10871,
+      "confluence_at_entry": 4,
+      "signal_strength": "MODERATE",
+      "status": "OPEN",
+      "opened_at": "2026-03-15T22:49:30.144041",
+      "closed_at": null,
+      "exit_price": null,
+      "pnl_pips": null,
+      "pnl_usd": null,
+      "close_reason": null,
+      "entry_confluence": 4,
+      "entry_confluence_detail": {
+        "trend_alignment": true,
+        "rsi_confirmation": false,
+        "stochastic_confirmation": false,
+        "macd_confirmation": true,
+        "bollinger_position": false,
+        "candlestick_pattern": true,
+        "zone_proximity": false,
+        "mcginley_confirmation": true
+      },
+      "entry_trend": "STRONG_DOWN",
+      "entry_trend_strength": 36.5448504983386,
+      "entry_indicators": {
+        "sma_10": 1.33868,
+        "sma_20": 1.3404150000000001,
+        "ema_9": 1.3380938858235478,
+        "ema_21": 1.3421318708998493,
+        "rsi": 22.335628525670785,
+        "stoch_k": 26.92307692307758,
+        "stoch_d": 26.487892438926462,
+        "mcginley": 1.3434952974886352,
+        "atr": 0.006131777025057327,
+        "bb_upper": 1.347588639243787,
+        "bb_lower": 1.3332413607562132,
+        "macd_hist": 0.0006731414105346761
+      },
+      "monitoring_history": [
+        {
+          "time": "2026-03-15T22:49:30.249564+00:00",
+          "price": 1.33603,
+          "confluence": 4,
+          "pnl_pips": -0.3
+        }
+      ],
+      "trailing_stop_active": false,
+      "trailing_stop_price": null,
+      "last_check": "2026-03-15T22:49:30.249564+00:00",
+      "current_confluence": 4,
+      "current_pnl_pips": -0.3
+    }
+  ]
+}

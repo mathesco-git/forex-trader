@@ -14,7 +14,7 @@ from app import engine, state
 from app.config import (
     PAIRS, PIP_VALUES, MAX_OPEN_POSITIONS,
     INITIAL_CAPITAL, RISK_PER_TRADE, LEVERAGE,
-    MIN_CONFLUENCE,
+    MIN_CONFLUENCE, MAX_DAILY_LOSS_PCT,
 )
 
 
@@ -32,6 +32,32 @@ def morning_scan(data_feed, broker):
     scan_time = datetime.now(timezone.utc).isoformat()
     all_signals = []
     tradeable = []
+
+    # Circuit breaker check — block new trades if daily loss limit hit
+    is_tripped, daily_pnl, threshold = state.check_circuit_breaker()
+    if is_tripped:
+        event = {
+            "time": scan_time,
+            "type": "CIRCUIT_BREAKER",
+            "message": f"Daily loss limit hit: ${daily_pnl:.2f} (threshold: ${threshold:.2f}). No new trades.",
+        }
+        state.save_monitoring_event(event)
+        state.build_dashboard_data()
+        return {
+            "scan_time": scan_time,
+            "pairs_analyzed": 0,
+            "signals_found": 0,
+            "positions_opened": 0,
+            "slots_available": 0,
+            "effective_capital": 0,
+            "all_signals": [],
+            "selected": [],
+            "skipped": [],
+            "orders": [],
+            "circuit_breaker": True,
+            "daily_pnl": daily_pnl,
+            "daily_loss_threshold": threshold,
+        }
 
     # Analyze all pairs
     for pair in PAIRS:

@@ -1,0 +1,12 @@
+{
+  "trades": [
+    {
+      "pair": "EUR/USD",
+      "pnl_usd": 50.0
+    },
+    {
+      "pair": "GBP/USD",
+      "pnl_usd": -20.0
+    }
+  ]
+}

@@ -53,7 +53,7 @@ TRAILING_STOP_DISTANCE_PIPS = 15
 # SCHEDULE — Forex is 24/5 (Sun 5 PM ET → Fri 5 PM ET)
 # =============================================================================
 MORNING_SCAN_TIME = time(8, 0)      # 8:00 AM local — user's daily scan
-MONITOR_INTERVAL_MINUTES = 5        # Check every 5 min
+MONITOR_INTERVAL_MINUTES = 15       # Check every 15 min (saves GitHub Actions minutes)
 SESSION_CLOSE_TIME = time(22, 0)    # 10:00 PM local — safety sweep before sleep
 
 # Max hours to hold a position. If a trade hasn't hit TP/SL by then,
@@ -69,6 +69,7 @@ POSITIONS_FILE = os.path.join(DATA_DIR, "positions.json")
 TRADES_FILE = os.path.join(DATA_DIR, "trades.json")
 SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
 MONITORING_FILE = os.path.join(DATA_DIR, "monitoring.json")
+RUN_HISTORY_FILE = os.path.join(DATA_DIR, "run_history.json")
 DASHBOARD_DATA_FILE = os.path.join(BASE_DIR, "dashboard", "dashboard_data.json")
 
 # =============================================================================

@@ -6,6 +6,7 @@ Usage:
   python main.py scan          Run morning scan (select trades)
   python main.py monitor       Run intraday monitoring check
   python main.py close         Run evening close (exit all positions)
+  python main.py prognosis     Show trade prognosis and outlook
   python main.py simulate      Simulate a full trading day (for testing)
   python main.py status        Show current positions and P&L
   python main.py dashboard     Generate dashboard data file
@@ -52,6 +53,13 @@ def cmd_scan():
     print("=" * 60)
     print(f"  MORNING SCAN — {result['scan_time'][:19]}")
     print("=" * 60)
+
+    if result.get("circuit_breaker"):
+        print(f"  🛑 CIRCUIT BREAKER ACTIVE")
+        print(f"  Daily P&L: ${result['daily_pnl']:+.2f} (limit: ${result['daily_loss_threshold']:.2f})")
+        print(f"  No new trades will be opened today.")
+        return result
+
     print(f"  Pairs analyzed:     {result['pairs_analyzed']}")
     print(f"  Signals found:      {result['signals_found']}")
     print(f"  Positions opened:   {result['positions_opened']}")
@@ -73,6 +81,13 @@ def cmd_scan():
         for order in result["orders"]:
             print(f"    {order['order_id']}: {order['message']}")
 
+    state.save_run_event("scan", {
+        "pairs_analyzed": result["pairs_analyzed"],
+        "signals_found": result["signals_found"],
+        "positions_opened": result["positions_opened"],
+        "selected": result["selected"],
+        "circuit_breaker": result.get("circuit_breaker", False),
+    })
     return result
 
 
@@ -93,8 +108,14 @@ def cmd_monitor():
     print(f"  Actions taken:      {len(result['actions'])}")
     print()
 
+    if result.get("circuit_breaker"):
+        print(f"  🛑 CIRCUIT BREAKER TRIGGERED — all positions closed")
+
     for action in result["actions"]:
-        if action["type"] == "WARNING":
+        if action["type"] == "CIRCUIT_BREAKER":
+            print(f"  🛑 {action['pair']} — CIRCUIT BREAKER "
+                  f"({action['pnl_pips']:+.1f} pips, ${action['pnl_usd']:+.2f})")
+        elif action["type"] == "WARNING":
             print(f"  ⚠️  {action['pair']} — {action['reason']}")
         elif action["type"] == "FORCE_CLOSE":
             print(f"  🔴 {action['pair']} — FORCE CLOSED: {action['reason']} "
@@ -107,6 +128,13 @@ def cmd_monitor():
             print(f"  📈 {action['pair']} — Trailing stop → {action['new_stop']} "
                   f"(+{action['pnl_pips']:.1f} pips)")
 
+    closes = [a for a in result["actions"] if a["type"] in ("STOP_LOSS", "TAKE_PROFIT", "FORCE_CLOSE", "CIRCUIT_BREAKER")]
+    state.save_run_event("monitor", {
+        "positions_checked": result["positions_checked"],
+        "actions": len(result["actions"]),
+        "closed": len(closes),
+        "circuit_breaker": result.get("circuit_breaker", False),
+    })
     return result
 
 
@@ -143,7 +171,84 @@ def cmd_close():
               f"W/L: {summary['wins']}/{summary['losses']}  "
               f"Win rate: {summary['win_rate']}%")
 
+    state.save_run_event("close", {
+        "positions_closed": len(result["positions_closed"]),
+        "total_pnl_pips": result["total_pnl_pips"],
+        "total_pnl_usd": result["total_pnl_usd"],
+        "day_summary": result.get("day_summary", {}),
+    })
     return result
+
+
+def cmd_prognosis():
+    """Show trade prognosis and outlook for open positions."""
+    from app.prognosis import generate_prognosis
+    feed, _ = get_feed_and_broker()
+
+    report = generate_prognosis(feed)
+
+    print("=" * 60)
+    print(f"  TRADE PROGNOSIS — {report['report_time'][:19]}")
+    print("=" * 60)
+    print(f"  Capital:            ${report['effective_capital']:,.2f}")
+    print(f"  Daily realized P&L: ${report['daily_pnl']:+.2f}")
+
+    cb = report["circuit_breaker"]
+    if cb["is_tripped"]:
+        print(f"  🛑 CIRCUIT BREAKER: Active (${cb['daily_pnl']:+.2f} / ${cb['threshold']:.2f})")
+    else:
+        print(f"  Circuit breaker:    OK (${cb['daily_pnl']:+.2f} / ${cb['threshold']:.2f})")
+
+    positions = report["positions"]
+    if not positions:
+        print()
+        print("  No open positions to analyze.")
+    else:
+        print()
+        for pos in positions:
+            pnl_icon = "🟢" if pos["pnl_pips"] > 0 else "🔴" if pos["pnl_pips"] < 0 else "⚪"
+            rec_icon = {"HOLD": "✅", "TIGHTEN": "⚠️", "EXIT": "🛑"}.get(pos["recommendation"], "❓")
+            conf = pos["confluence"]
+            dist = pos["distances"]
+
+            print(f"  {'━' * 56}")
+            print(f"  {pnl_icon} {pos['pair']}  {pos['direction']}  "
+                  f"Entry: {pos['entry_price']}  Now: {pos['current_price']}")
+            print(f"     P&L: {pos['pnl_pips']:+.1f} pips (${pos['pnl_usd']:+.2f})")
+            print(f"     Confluence: {conf['current']}/8 "
+                  f"({'↑' if conf['change'] > 0 else '↓' if conf['change'] < 0 else '='}"
+                  f"{abs(conf['change'])} from entry: {conf['at_entry']}/8)")
+            print(f"     To SL: {dist['to_sl_pips']:+.1f} pips  |  To TP: {dist['to_tp_pips']:+.1f} pips  "
+                  f"|  R:R {dist['rr_current']:.1f}:1")
+            print(f"     Trend: {pos['trend']['current']} ({pos['trend']['strength']:.0f}/100) "
+                  f"{'✓ aligned' if pos['trend']['direction_aligned'] else '✗ misaligned'}")
+            print(f"     Momentum: {pos['momentum']}"
+                  f"{'  |  RSI: ' + str(pos['indicators']['rsi']) if pos['indicators']['rsi'] else ''}")
+            if pos["trailing_stop_active"]:
+                print(f"     📈 Trailing stop active")
+            print(f"     {rec_icon} RECOMMENDATION: {pos['recommendation']}  "
+                  f"(confidence: {pos['confidence']}/100)")
+            for reason in pos["reasons"]:
+                print(f"        → {reason}")
+
+    # Market overview
+    print()
+    print("  MARKET OVERVIEW")
+    print(f"  {'━' * 56}")
+    for m in report["market_overview"]:
+        sig_icon = "✅" if m["signal"] != "NO TRADE" else "⬜"
+        print(f"  {sig_icon} {m['pair']:8s}  {m['signal']:18s}  "
+              f"Conf: {m['confluence']}/8  Trend: {m['trend']} ({m['trend_strength']:.0f})")
+
+    # Save prognosis to dashboard data
+    state.build_dashboard_data()
+
+    state.save_run_event("prognosis", {
+        "open_positions": len(report["positions"]),
+        "recommendations": {p["recommendation"]: 1 for p in report["positions"]},
+        "circuit_breaker": report["circuit_breaker"]["is_tripped"],
+    })
+    return report
 
 
 def cmd_status():
@@ -317,6 +422,23 @@ def cmd_simulate():
     print(f"  Total P&L (pips):   {total_pips:+.1f}")
     print(f"  Total P&L (USD):    ${total_pnl:+.2f}")
 
+    # Record simulated workflow run events in run history
+    state.save_run_event("scan", {
+        "pairs_analyzed": scan_result.get("pairs_analyzed", 0),
+        "signals_found": scan_result.get("signals_found", 0),
+        "positions_opened": scan_result.get("positions_opened", 0),
+        "selected": scan_result.get("selected", []),
+    })
+    state.save_run_event("monitor", {
+        "positions_checked": len(all_trades),
+        "closed": len([t for t in all_trades if t.get("close_reason") not in ("EVENING_CLOSE", None)]),
+    })
+    state.save_run_event("close", {
+        "positions_closed": len(close_result.get("positions_closed", [])),
+        "total_pnl_pips": total_pips,
+        "total_pnl_usd": total_pnl,
+    })
+
     # Generate dashboard data
     state.build_dashboard_data()
     print()
@@ -371,6 +493,7 @@ COMMANDS = {
     "scan": cmd_scan,
     "monitor": cmd_monitor,
     "close": cmd_close,
+    "prognosis": cmd_prognosis,
     "status": cmd_status,
     "simulate": cmd_simulate,
     "dashboard": cmd_dashboard,

@@ -2,6 +2,8 @@
 """
 Integration tests for the full trading pipeline.
 Tests the morning->monitor->close cycle with deterministic data.
+Covers: indicators, engine, data feed, broker, state, scanner,
+        monitor, closer, prognosis, circuit breaker, and full pipeline.
 """
 import os
 import sys
@@ -44,6 +46,13 @@ class TestIndicators(unittest.TestCase):
         self.assertIsNotNone(result[-1])
         self.assertGreater(result[-1], 50)
 
+    def test_rsi_downtrend(self):
+        from app.indicators import rsi
+        data = list(range(30, 0, -1))  # Downtrend
+        result = rsi(data, 14)
+        self.assertIsNotNone(result[-1])
+        self.assertLess(result[-1], 50)
+
     def test_atr(self):
         from app.indicators import atr
         highs = [1.1 + i * 0.01 for i in range(20)]
@@ -52,6 +61,62 @@ class TestIndicators(unittest.TestCase):
         result = atr(highs, lows, closes, 14)
         self.assertIsNotNone(result[-1])
         self.assertGreater(result[-1], 0)
+
+    def test_stochastic(self):
+        from app.indicators import stochastic
+        highs = [1.1 + i * 0.005 for i in range(30)]
+        lows = [1.0 + i * 0.005 for i in range(30)]
+        closes = [1.05 + i * 0.005 for i in range(30)]
+        k, d = stochastic(highs, lows, closes, 14, 3)
+        self.assertIsNotNone(k[-1])
+        self.assertIsNotNone(d[-1])
+        self.assertGreaterEqual(k[-1], 0)
+        self.assertLessEqual(k[-1], 100)
+
+    def test_macd(self):
+        from app.indicators import macd
+        data = list(range(1, 40))
+        ml, sl, hist = macd(data, 12, 26, 9)
+        self.assertIsNotNone(ml[-1])
+        self.assertIsNotNone(hist[-1])
+
+    def test_bollinger(self):
+        from app.indicators import bollinger
+        data = [1.1 + i * 0.001 for i in range(30)]
+        upper, mid, lower = bollinger(data, 20, 2)
+        self.assertIsNotNone(upper[-1])
+        self.assertIsNotNone(lower[-1])
+        self.assertGreater(upper[-1], lower[-1])
+
+    def test_mcginley(self):
+        from app.indicators import mcginley_dynamic
+        data = [1.1 + i * 0.001 for i in range(20)]
+        result = mcginley_dynamic(data, 14)
+        self.assertIsNotNone(result[-1])
+
+    def test_candlestick_patterns(self):
+        from app.indicators import detect_candlestick_patterns
+        # Create a strong bull candle scenario
+        highs = [1.10, 1.11, 1.13]
+        lows = [1.08, 1.09, 1.10]
+        closes = [1.09, 1.10, 1.125]
+        patterns = detect_candlestick_patterns(highs, lows, closes, 2)
+        self.assertIsInstance(patterns, list)
+
+    def test_trend_strength(self):
+        from app.indicators import trend_strength
+        # Strong uptrend
+        data = list(range(1, 30))
+        strength = trend_strength(data, 14)
+        self.assertGreater(strength, 0)
+
+    def test_supply_demand_zones(self):
+        from app.indicators import find_supply_demand_zones
+        feed = MockDataFeed(seed=42)
+        hist = feed.get_historical("EUR/USD", bars=40)
+        zones = find_supply_demand_zones(hist["highs"], hist["lows"], hist["closes"], 20)
+        self.assertIn("demand", zones)
+        self.assertIn("supply", zones)
 
 
 class TestEngine(unittest.TestCase):
@@ -81,6 +146,28 @@ class TestEngine(unittest.TestCase):
     def test_no_trade_on_insufficient_data(self):
         result = engine.analyze("EUR/USD", [1.1, 1.2], [1.15, 1.25], [1.05, 1.15])
         self.assertEqual(result["signal"], "NO TRADE")
+
+    def test_confluence_detail_structure(self):
+        hist = self.feed.get_historical("EUR/USD", bars=40)
+        result = engine.analyze("EUR/USD", hist["closes"], hist["highs"], hist["lows"])
+        if result["confluence_count"] > 0:
+            detail = result["confluence_detail"]
+            expected_keys = [
+                "trend_alignment", "rsi_confirmation", "stochastic_confirmation",
+                "macd_confirmation", "bollinger_position", "candlestick_pattern",
+                "zone_proximity", "mcginley_confirmation",
+            ]
+            for key in expected_keys:
+                self.assertIn(key, detail)
+
+    def test_trade_setup_has_valid_rr(self):
+        """When a trade signal is generated, R:R should be >= 0.8."""
+        from app.config import PAIRS
+        for pair in PAIRS:
+            hist = self.feed.get_historical(pair, bars=40)
+            result = engine.analyze(pair, hist["closes"], hist["highs"], hist["lows"])
+            if result["trade"]:
+                self.assertGreaterEqual(result["trade"]["rr_ratio"], 0.8)
 
 
 class TestDataFeed(unittest.TestCase):
@@ -116,6 +203,20 @@ class TestDataFeed(unittest.TestCase):
             self.assertIn("timestamp", p)
             self.assertIn("price", p)
 
+    def test_unknown_pair_raises(self):
+        feed = MockDataFeed(seed=42)
+        with self.assertRaises(ValueError):
+            feed.get_historical("INVALID/PAIR")
+
+    def test_all_pairs_have_data(self):
+        from app.config import PAIRS
+        feed = MockDataFeed(seed=42)
+        for pair in PAIRS:
+            hist = feed.get_historical(pair, bars=40)
+            self.assertEqual(len(hist["closes"]), 40)
+            price = feed.get_current_price(pair)
+            self.assertGreater(price["mid"], 0)
+
 
 class TestBroker(unittest.TestCase):
     """Test the mock broker."""
@@ -137,7 +238,6 @@ class TestBroker(unittest.TestCase):
         broker = MockBroker()
         result = broker.open_position("EUR/USD", "LONG", 1.1500, 1.1450, 1.1600, 10000)
         order_id = result["order_id"]
-
         sl_result = broker.check_stops(order_id, 1.1510, 1.1440)
         self.assertIsNotNone(sl_result)
         self.assertEqual(sl_result["reason"], "STOP_LOSS")
@@ -146,10 +246,36 @@ class TestBroker(unittest.TestCase):
         broker = MockBroker()
         result = broker.open_position("EUR/USD", "LONG", 1.1500, 1.1450, 1.1600, 10000)
         order_id = result["order_id"]
-
         tp_result = broker.check_stops(order_id, 1.1610, 1.1490)
         self.assertIsNotNone(tp_result)
         self.assertEqual(tp_result["reason"], "TAKE_PROFIT")
+
+    def test_short_pnl_calculation(self):
+        broker = MockBroker()
+        result = broker.open_position("EUR/USD", "SHORT", 1.1500, 1.1550, 1.1400, 10000)
+        order_id = result["order_id"]
+        close = broker.close_position(order_id, 1.1450, "TEST")
+        self.assertGreater(close["pnl_pips"], 0)  # SHORT in profit when price falls
+
+    def test_close_already_closed(self):
+        broker = MockBroker()
+        result = broker.open_position("EUR/USD", "LONG", 1.1500, 1.1450, 1.1600, 10000)
+        order_id = result["order_id"]
+        broker.close_position(order_id, 1.1550, "TEST")
+        second_close = broker.close_position(order_id, 1.1550, "TEST")
+        self.assertEqual(second_close["status"], "ERROR")
+
+    def test_close_nonexistent_order(self):
+        broker = MockBroker()
+        result = broker.close_position("FAKE-ID", 1.1500, "TEST")
+        self.assertEqual(result["status"], "ERROR")
+
+    def test_get_open_positions(self):
+        broker = MockBroker()
+        broker.open_position("EUR/USD", "LONG", 1.1500, 1.1450, 1.1600, 10000)
+        broker.open_position("GBP/USD", "SHORT", 1.3400, 1.3450, 1.3300, 5000)
+        open_pos = broker.get_open_positions()
+        self.assertEqual(len(open_pos), 2)
 
 
 def _setup_temp_state(test_dir):
@@ -203,6 +329,214 @@ class TestState(unittest.TestCase):
         state.save_trade({"pair": "GBP/USD", "pnl_usd": -20.0})
         loaded = state.load_trades()
         self.assertEqual(len(loaded["trades"]), 2)
+
+    def test_update_position(self):
+        from app import state
+        pos = {"order_id": "TEST-002", "pair": "EUR/USD", "trailing_stop_active": False}
+        state.add_position(pos)
+        state.update_position("TEST-002", {"trailing_stop_active": True, "trailing_stop_price": 1.1480})
+        loaded = state.load_positions()
+        self.assertTrue(loaded["positions"][0]["trailing_stop_active"])
+        self.assertEqual(loaded["positions"][0]["trailing_stop_price"], 1.1480)
+
+    def test_monitoring_event_limit(self):
+        from app import state
+        for i in range(250):
+            state.save_monitoring_event({"time": f"2026-03-16T{i:05d}", "type": "CHECK"})
+        loaded = state.load_monitoring()
+        self.assertLessEqual(len(loaded["events"]), 200)
+
+    def test_circuit_breaker_not_tripped(self):
+        from app import state
+        is_tripped, pnl, threshold = state.check_circuit_breaker()
+        self.assertFalse(is_tripped)
+        self.assertEqual(pnl, 0)
+
+    def test_circuit_breaker_tripped(self):
+        from app import state
+        from datetime import datetime, timezone
+        # Simulate large daily loss
+        today_str = datetime.now(timezone.utc).isoformat()
+        state.save_trade({"pair": "EUR/USD", "pnl_usd": -350.0, "closed_at": today_str})
+        is_tripped, pnl, threshold = state.check_circuit_breaker()
+        self.assertTrue(is_tripped)
+        self.assertLess(pnl, 0)
+
+    def test_get_daily_pnl(self):
+        from app import state
+        from datetime import datetime, timezone
+        today_str = datetime.now(timezone.utc).isoformat()
+        state.save_trade({"pair": "EUR/USD", "pnl_usd": 25.0, "closed_at": today_str})
+        state.save_trade({"pair": "GBP/USD", "pnl_usd": -10.0, "closed_at": today_str})
+        pnl, count = state.get_daily_pnl()
+        self.assertEqual(pnl, 15.0)
+        self.assertEqual(count, 2)
+
+    def test_build_dashboard_data(self):
+        from app import state
+        dashboard = state.build_dashboard_data()
+        self.assertIn("summary", dashboard)
+        self.assertIn("equity_curve", dashboard)
+        self.assertIn("pair_pnl", dashboard)
+        self.assertIn("close_reasons", dashboard)
+        self.assertIn("signals", dashboard)
+        self.assertIn("positions", dashboard)
+
+    def test_equity_curve_with_trades(self):
+        from app import state
+        from datetime import datetime, timezone
+        today = datetime.now(timezone.utc).isoformat()
+        state.save_trade({"pair": "EUR/USD", "pnl_usd": 50.0, "closed_at": today})
+        state.save_trade({"pair": "GBP/USD", "pnl_usd": -20.0, "closed_at": today})
+        dashboard = state.build_dashboard_data()
+        curve = dashboard["equity_curve"]
+        self.assertEqual(len(curve), 3)  # Start + 2 trades
+        self.assertEqual(curve[0]["equity"], 10000)
+        self.assertEqual(curve[1]["equity"], 10050)
+        self.assertEqual(curve[2]["equity"], 10030)
+
+
+class TestPrognosis(unittest.TestCase):
+    """Test the prognosis module."""
+
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp(prefix="forex_test_prognosis_")
+        _setup_temp_state(self.test_dir)
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir, ignore_errors=True)
+
+    def test_prognosis_no_positions(self):
+        from app.prognosis import generate_prognosis
+        feed = MockDataFeed(seed=42)
+        report = generate_prognosis(feed)
+        self.assertIn("report_time", report)
+        self.assertEqual(len(report["positions"]), 0)
+        self.assertIn("market_overview", report)
+        self.assertEqual(len(report["market_overview"]), 5)
+
+    def test_prognosis_with_positions(self):
+        from app import state
+        from app.prognosis import generate_prognosis
+
+        # Add a mock position
+        pos = {
+            "order_id": "MOCK-TEST1",
+            "pair": "EUR/USD",
+            "direction": "SHORT",
+            "entry_price": 1.1500,
+            "stop_loss": 1.1550,
+            "take_profit": 1.1400,
+            "units": 10000,
+            "entry_confluence": 5,
+            "entry_trend": "STRONG_DOWN",
+            "entry_trend_strength": 45,
+            "trailing_stop_active": False,
+            "trailing_stop_price": None,
+            "monitoring_history": [],
+        }
+        state.add_position(pos)
+
+        feed = MockDataFeed(seed=42)
+        report = generate_prognosis(feed)
+        self.assertEqual(len(report["positions"]), 1)
+
+        p = report["positions"][0]
+        self.assertEqual(p["pair"], "EUR/USD")
+        self.assertIn(p["recommendation"], ["HOLD", "TIGHTEN", "EXIT"])
+        self.assertIn("confidence", p)
+        self.assertGreaterEqual(p["confidence"], 0)
+        self.assertLessEqual(p["confidence"], 100)
+        self.assertIn("reasons", p)
+        self.assertGreater(len(p["reasons"]), 0)
+
+    def test_prognosis_circuit_breaker_status(self):
+        from app.prognosis import generate_prognosis
+        feed = MockDataFeed(seed=42)
+        report = generate_prognosis(feed)
+        self.assertIn("circuit_breaker", report)
+        self.assertFalse(report["circuit_breaker"]["is_tripped"])
+
+    def test_prognosis_market_overview(self):
+        from app.prognosis import generate_prognosis
+        feed = MockDataFeed(seed=42)
+        report = generate_prognosis(feed)
+        overview = report["market_overview"]
+        self.assertEqual(len(overview), 5)
+        for item in overview:
+            self.assertIn("pair", item)
+            self.assertIn("signal", item)
+            self.assertIn("confluence", item)
+
+
+class TestCircuitBreaker(unittest.TestCase):
+    """Test circuit breaker integration in scanner and monitor."""
+
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp(prefix="forex_test_cb_")
+        _setup_temp_state(self.test_dir)
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir, ignore_errors=True)
+
+    def test_scanner_blocked_by_circuit_breaker(self):
+        from app import state
+        from app.scanner import morning_scan
+        from datetime import datetime, timezone
+
+        # Trip the circuit breaker
+        today = datetime.now(timezone.utc).isoformat()
+        state.save_trade({"pair": "EUR/USD", "pnl_usd": -350.0, "closed_at": today})
+
+        feed = MockDataFeed(seed=42)
+        broker = MockBroker()
+        result = morning_scan(feed, broker)
+
+        self.assertTrue(result.get("circuit_breaker"))
+        self.assertEqual(result["positions_opened"], 0)
+        self.assertEqual(result["pairs_analyzed"], 0)
+
+    def test_monitor_closes_on_circuit_breaker(self):
+        from app import state
+        from app.monitor import monitor_positions
+        from datetime import datetime, timezone
+
+        # Open a position
+        pos = {
+            "order_id": "MOCK-CB01",
+            "pair": "EUR/USD",
+            "direction": "LONG",
+            "entry_price": 1.1500,
+            "stop_loss": 1.1450,
+            "take_profit": 1.1600,
+            "units": 10000,
+            "entry_confluence": 5,
+            "opened_at": datetime.now(timezone.utc).isoformat(),
+        }
+        state.add_position(pos)
+
+        # Trip the circuit breaker
+        today = datetime.now(timezone.utc).isoformat()
+        state.save_trade({"pair": "GBP/USD", "pnl_usd": -350.0, "closed_at": today})
+
+        feed = MockDataFeed(seed=42)
+        broker = MockBroker()
+        # Load position into broker
+        broker._orders["MOCK-CB01"] = {
+            "order_id": "MOCK-CB01", "pair": "EUR/USD", "direction": "LONG",
+            "entry_price": 1.1500, "stop_loss": 1.1450, "take_profit": 1.1600,
+            "units": 10000, "status": "OPEN", "opened_at": pos["opened_at"],
+            "closed_at": None, "exit_price": None,
+            "pnl_pips": None, "pnl_usd": None, "close_reason": None,
+        }
+
+        result = monitor_positions(feed, broker)
+        self.assertTrue(result.get("circuit_breaker"))
+        self.assertGreater(len(result["closed_positions"]), 0)
+
+        # Verify position was removed from state
+        remaining = state.load_positions()
+        self.assertEqual(len(remaining["positions"]), 0)
 
 
 class TestPipeline(unittest.TestCase):
@@ -296,6 +630,8 @@ class TestPipeline(unittest.TestCase):
         self.assertIn("signals", dashboard)
         self.assertIn("positions", dashboard)
         self.assertIn("trades", dashboard)
+        self.assertIn("equity_curve", dashboard)
+        self.assertIn("pair_pnl", dashboard)
 
     def test_no_signals_no_crash(self):
         """Test graceful handling when no positions exist."""
@@ -324,6 +660,30 @@ class TestPipeline(unittest.TestCase):
         scan = morning_scan(feed, broker)
         positions = state.load_positions()
         self.assertLessEqual(len(positions["positions"]), MAX_OPEN_POSITIONS)
+
+    def test_full_day_with_prognosis(self):
+        """Test that prognosis works within the pipeline."""
+        from app import state
+        from app.scanner import morning_scan
+        from app.prognosis import generate_prognosis
+
+        feed = MockDataFeed(seed=42)
+        broker = MockBroker()
+
+        # Scan first
+        scan_result = morning_scan(feed, broker)
+
+        # Run prognosis
+        feed_prog = MockDataFeed(seed=42)
+        report = generate_prognosis(feed_prog)
+
+        self.assertIn("report_time", report)
+        self.assertIn("market_overview", report)
+        self.assertEqual(len(report["market_overview"]), 5)
+
+        # Prognosis position count should match open positions
+        open_count = len(state.load_positions().get("positions", []))
+        self.assertEqual(len(report["positions"]), open_count)
 
 
 if __name__ == "__main__":
