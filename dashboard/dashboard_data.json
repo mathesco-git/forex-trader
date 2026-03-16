@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-03-16T07:26:02.970002+00:00",
+  "generated_at": "2026-03-16T07:29:42.405892+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
-    "total_pnl_usd": 5.33,
-    "win_rate": 100.0,
-    "wins": 1,
-    "losses": 0,
-    "daily_pnl": 5.33,
+    "total_pnl_usd": -2.59,
+    "win_rate": 0.0,
+    "wins": 0,
+    "losses": 1,
+    "daily_pnl": -2.59,
     "circuit_breaker_active": false,
-    "circuit_breaker_threshold": -300.1599
+    "circuit_breaker_threshold": -299.9223
   },
   "equity_curve": [
     {
@@ -19,20 +19,20 @@
     },
     {
       "trade_num": 1,
-      "equity": 10005.33,
+      "equity": 9997.41,
       "pair": "USD/CHF",
-      "pnl_usd": 5.33,
+      "pnl_usd": -2.59,
       "reason": "EVENING_CLOSE"
     }
   ],
   "pair_pnl": {
-    "USD/CHF": 5.33
+    "USD/CHF": -2.59
   },
   "close_reasons": {
     "EVENING_CLOSE": 1
   },
   "signals": {
-    "scan_time": "2026-03-16T07:21:27.723233+00:00",
+    "scan_time": "2026-03-16T07:29:42.368976+00:00",
     "signals": [
       {
         "pair": "EUR/USD",
@@ -54,11 +54,11 @@
           "McGINLEY: Falling & price below (1.17774)"
         ],
         "current_price": {
-          "bid": 1.15058,
-          "ask": 1.15087,
-          "mid": 1.15072,
-          "spread_pips": 2.9,
-          "timestamp": "2026-03-16T07:21:27.740364"
+          "bid": 1.15006,
+          "ask": 1.15032,
+          "mid": 1.15019,
+          "spread_pips": 2.6,
+          "timestamp": "2026-03-16T07:29:42.369411"
         }
       },
       {
@@ -74,11 +74,11 @@
           "Trend strength too low (17/100)"
         ],
         "current_price": {
-          "bid": 1.33932,
-          "ask": 1.3395,
-          "mid": 1.33941,
-          "spread_pips": 1.7,
-          "timestamp": "2026-03-16T07:21:27.741044"
+          "bid": 1.33879,
+          "ask": 1.33901,
+          "mid": 1.3389,
+          "spread_pips": 2.2,
+          "timestamp": "2026-03-16T07:29:42.369723"
         }
       },
       {
@@ -101,11 +101,11 @@
           "McGINLEY: Rising & price above (155.84385)"
         ],
         "current_price": {
-          "bid": 157.939,
-          "ask": 157.963,
-          "mid": 157.951,
-          "spread_pips": 2.4,
-          "timestamp": "2026-03-16T07:21:27.741623"
+          "bid": 157.887,
+          "ask": 157.914,
+          "mid": 157.901,
+          "spread_pips": 2.7,
+          "timestamp": "2026-03-16T07:29:42.370023"
         }
       },
       {
@@ -128,11 +128,11 @@
           "McGINLEY: Falling & price below (0.62822)"
         ],
         "current_price": {
-          "bid": 0.62167,
-          "ask": 0.6219,
-          "mid": 0.62179,
-          "spread_pips": 2.3,
-          "timestamp": "2026-03-16T07:21:27.742203"
+          "bid": 0.62147,
+          "ask": 0.62174,
+          "mid": 0.62161,
+          "spread_pips": 2.7,
+          "timestamp": "2026-03-16T07:29:42.370337"
         }
       },
       {
@@ -163,23 +163,23 @@
           "McGINLEY: Rising & price above (0.77908)"
         ],
         "current_price": {
-          "bid": 0.7884,
-          "ask": 0.78855,
-          "mid": 0.78847,
-          "spread_pips": 1.5,
-          "timestamp": "2026-03-16T07:21:27.742804"
+          "bid": 0.78777,
+          "ask": 0.78801,
+          "mid": 0.78789,
+          "spread_pips": 2.5,
+          "timestamp": "2026-03-16T07:29:42.370632"
         }
       }
     ]
   },
   "positions": {
-    "updated_at": "2026-03-16T07:21:30.623900+00:00",
+    "updated_at": "2026-03-16T07:29:42.402791+00:00",
     "positions": []
   },
   "trades": {
     "trades": [
       {
-        "order_id": "MOCK-1199F35B",
+        "order_id": "MOCK-B5641E6E",
         "pair": "USD/CHF",
         "direction": "LONG",
         "entry_price": 0.78808,
@@ -189,11 +189,11 @@
         "confluence_at_entry": 4,
         "signal_strength": "MODERATE",
         "status": "OPEN",
-        "opened_at": "2026-03-16T07:21:27.760074",
-        "closed_at": "2026-03-16T07:21:30.583570+00:00",
-        "exit_price": 0.78847,
-        "pnl_pips": 3.9,
-        "pnl_usd": 5.33,
+        "opened_at": "2026-03-16T07:29:42.370714",
+        "closed_at": "2026-03-16T07:29:42.402351+00:00",
+        "exit_price": 0.78789,
+        "pnl_pips": -1.9,
+        "pnl_usd": -2.59,
         "close_reason": "EVENING_CLOSE",
         "entry_confluence": 4,
         "entry_confluence_detail": {
@@ -224,268 +224,263 @@
         },
         "monitoring_history": [
           {
-            "time": "2026-03-16T07:21:27.946251+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.373794+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:28.187874+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.375522+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:28.382850+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.377309+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:28.564098+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.379115+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:28.757265+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.380964+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:28.930586+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.382828+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.096182+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.384721+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.269338+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.386733+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.512469+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.388692+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.656355+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.390686+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.800907+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.392713+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:29.939832+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.394827+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:30.145261+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.396944+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           },
           {
-            "time": "2026-03-16T07:21:30.353324+00:00",
-            "price": 0.78847,
+            "time": "2026-03-16T07:29:42.399131+00:00",
+            "price": 0.78789,
             "confluence": 4,
-            "pnl_pips": 3.9
+            "pnl_pips": -1.9
           }
         ],
         "trailing_stop_active": false,
         "trailing_stop_price": null,
-        "last_check": "2026-03-16T07:21:30.353324+00:00",
+        "last_check": "2026-03-16T07:29:42.399131+00:00",
         "current_confluence": 4,
-        "current_pnl_pips": 3.9
+        "current_pnl_pips": -1.9
       }
     ]
   },
   "monitoring": {
     "events": [
       {
-        "time": "2026-03-16T07:21:27.946251+00:00",
+        "time": "2026-03-16T07:29:42.373794+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:28.187874+00:00",
+        "time": "2026-03-16T07:29:42.375522+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:28.382850+00:00",
+        "time": "2026-03-16T07:29:42.377309+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:28.564098+00:00",
+        "time": "2026-03-16T07:29:42.379115+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:28.757265+00:00",
+        "time": "2026-03-16T07:29:42.380964+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:28.930586+00:00",
+        "time": "2026-03-16T07:29:42.382828+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.096182+00:00",
+        "time": "2026-03-16T07:29:42.384721+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.269338+00:00",
+        "time": "2026-03-16T07:29:42.386733+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.512469+00:00",
+        "time": "2026-03-16T07:29:42.388692+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.656355+00:00",
+        "time": "2026-03-16T07:29:42.390686+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.800907+00:00",
+        "time": "2026-03-16T07:29:42.392713+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:29.939832+00:00",
+        "time": "2026-03-16T07:29:42.394827+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:30.145261+00:00",
+        "time": "2026-03-16T07:29:42.396944+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:30.353324+00:00",
+        "time": "2026-03-16T07:29:42.399131+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
-        "price": 0.78847,
+        "order_id": "MOCK-B5641E6E",
+        "price": 0.78789,
         "confluence_now": 4,
         "confluence_entry": 4,
-        "pnl_pips": 3.9,
+        "pnl_pips": -1.9,
         "trailing_stop": false
       },
       {
-        "time": "2026-03-16T07:21:30.583570+00:00",
+        "time": "2026-03-16T07:29:42.402351+00:00",
         "type": "EVENING_CLOSE",
         "pair": "USD/CHF",
-        "order_id": "MOCK-1199F35B",
+        "order_id": "MOCK-B5641E6E",
         "entry_price": 0.78808,
-        "exit_price": 0.78847,
-        "pnl_pips": 3.9,
-        "pnl_usd": 5.33
-      },
-      {
-        "time": "2026-03-16T07:26:02.874574+00:00",
-        "type": "NO_POSITIONS",
-        "message": "No open positions to monitor"
+        "exit_price": 0.78789,
+        "pnl_pips": -1.9,
+        "pnl_usd": -2.59
       }
     ]
   },
@@ -527,6 +522,45 @@
         "positions_closed": 1,
         "total_pnl_pips": 3.9,
         "total_pnl_usd": 5.33
+      }
+    },
+    {
+      "time": "2026-03-16T07:26:02.994571+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-16T07:29:42.404673+00:00",
+      "action": "scan",
+      "summary": {
+        "pairs_analyzed": 5,
+        "signals_found": 1,
+        "positions_opened": 1,
+        "selected": [
+          "USD/CHF"
+        ]
+      }
+    },
+    {
+      "time": "2026-03-16T07:29:42.404904+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 1,
+        "closed": 0
+      }
+    },
+    {
+      "time": "2026-03-16T07:29:42.405284+00:00",
+      "action": "close",
+      "summary": {
+        "positions_closed": 1,
+        "total_pnl_pips": -1.9,
+        "total_pnl_usd": -2.59
       }
     }
   ]

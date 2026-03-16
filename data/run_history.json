@@ -48,6 +48,35 @@
         "closed": 0,
         "circuit_breaker": false
       }
+    },
+    {
+      "time": "2026-03-16T07:29:42.404673+00:00",
+      "action": "scan",
+      "summary": {
+        "pairs_analyzed": 5,
+        "signals_found": 1,
+        "positions_opened": 1,
+        "selected": [
+          "USD/CHF"
+        ]
+      }
+    },
+    {
+      "time": "2026-03-16T07:29:42.404904+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 1,
+        "closed": 0
+      }
+    },
+    {
+      "time": "2026-03-16T07:29:42.405284+00:00",
+      "action": "close",
+      "summary": {
+        "positions_closed": 1,
+        "total_pnl_pips": -1.9,
+        "total_pnl_usd": -2.59
+      }
     }
   ]
 }
