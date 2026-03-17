@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-17T18:09:05.787613+00:00",
+  "generated_at": "2026-03-17T19:39:12.128740+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -556,6 +556,11 @@
         "time": "2026-03-17T18:09:05.786586+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
+      },
+      {
+        "time": "2026-03-17T19:39:12.127555+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
@@ -839,6 +844,16 @@
     },
     {
       "time": "2026-03-17T15:47:29.604716+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-17T18:09:05.788627+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
