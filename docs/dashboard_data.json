@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-16T22:53:25.779318+00:00",
+  "generated_at": "2026-03-17T10:10:37.419783+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -7,7 +7,7 @@
     "win_rate": 0.0,
     "wins": 0,
     "losses": 1,
-    "daily_pnl": -2.18,
+    "daily_pnl": 0,
     "circuit_breaker_active": false,
     "circuit_breaker_threshold": -299.9346
   },
@@ -531,6 +531,11 @@
         "time": "2026-03-16T22:53:25.778137+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
+      },
+      {
+        "time": "2026-03-17T10:10:37.418569+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
@@ -764,6 +769,16 @@
     },
     {
       "time": "2026-03-16T22:03:18.224665+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-16T22:53:25.780334+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
