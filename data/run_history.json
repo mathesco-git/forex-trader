@@ -356,6 +356,16 @@
         "closed": 0,
         "circuit_breaker": false
       }
+    },
+    {
+      "time": "2026-03-18T14:50:47.307975+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
     }
   ]
 }
