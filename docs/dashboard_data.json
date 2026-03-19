@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-19T09:11:17.257401+00:00",
+  "generated_at": "2026-03-19T09:29:01.667574+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -621,22 +621,15 @@
         "time": "2026-03-19T09:11:17.256131+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
+      },
+      {
+        "time": "2026-03-19T09:29:01.665784+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
   "run_history": [
-    {
-      "time": "2026-03-16T07:38:56.821721+00:00",
-      "action": "scan",
-      "summary": {
-        "pairs_analyzed": 5,
-        "signals_found": 1,
-        "positions_opened": 1,
-        "selected": [
-          "USD/CHF"
-        ]
-      }
-    },
     {
       "time": "2026-03-16T07:38:56.821979+00:00",
       "action": "monitor",
@@ -916,6 +909,16 @@
     },
     {
       "time": "2026-03-18T22:02:47.422445+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-19T09:11:17.258585+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
