@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T21:00:44.590187+00:00",
+  "generated_at": "2026-03-20T21:56:48.311529+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -319,17 +319,6 @@
   "monitoring": {
     "events": [
       {
-        "time": "2026-03-16T07:46:51.523108+00:00",
-        "type": "CHECK",
-        "pair": "USD/CHF",
-        "order_id": "MOCK-DD23C40E",
-        "price": 0.78792,
-        "confluence_now": 4,
-        "confluence_entry": 4,
-        "pnl_pips": -1.6,
-        "trailing_stop": false
-      },
-      {
         "time": "2026-03-16T07:46:51.738415+00:00",
         "type": "CHECK",
         "pair": "USD/CHF",
@@ -590,20 +579,15 @@
         "time": "2026-03-20T21:00:44.589088+00:00",
         "type": "EVENING_CLOSE",
         "message": "No positions to close"
+      },
+      {
+        "time": "2026-03-20T21:56:48.310060+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
   "run_history": [
-    {
-      "time": "2026-03-17T19:39:12.129803+00:00",
-      "action": "monitor",
-      "summary": {
-        "positions_checked": 0,
-        "actions": 0,
-        "closed": 0,
-        "circuit_breaker": false
-      }
-    },
     {
       "time": "2026-03-17T21:55:31.422559+00:00",
       "action": "monitor",
@@ -892,6 +876,26 @@
         "actions": 0,
         "closed": 0,
         "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-20T21:00:44.591288+00:00",
+      "action": "close",
+      "summary": {
+        "positions_closed": 0,
+        "total_pnl_pips": 0,
+        "total_pnl_usd": 0,
+        "day_summary": {
+          "date": "2026-03-20",
+          "trades": 0,
+          "wins": 0,
+          "losses": 0,
+          "win_rate": 0,
+          "total_pnl_pips": 0,
+          "total_pnl_usd": 0,
+          "best_trade": null,
+          "worst_trade": null
+        }
       }
     }
   ]

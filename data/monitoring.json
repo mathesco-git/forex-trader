@@ -393,6 +393,11 @@
       "time": "2026-03-20T21:00:44.589088+00:00",
       "type": "EVENING_CLOSE",
       "message": "No positions to close"
+    },
+    {
+      "time": "2026-03-20T21:56:48.310060+00:00",
+      "type": "NO_POSITIONS",
+      "message": "No open positions to monitor"
     }
   ]
 }
