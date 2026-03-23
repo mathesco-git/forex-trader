@@ -408,6 +408,11 @@
       "time": "2026-03-23T14:40:36.947016+00:00",
       "type": "NO_POSITIONS",
       "message": "No open positions to monitor"
+    },
+    {
+      "time": "2026-03-23T14:41:09.161386+00:00",
+      "type": "NO_POSITIONS",
+      "message": "No open positions to monitor"
     }
   ]
 }

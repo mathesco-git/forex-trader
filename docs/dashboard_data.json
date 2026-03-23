@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-23T14:40:36.948373+00:00",
+  "generated_at": "2026-03-23T14:41:09.162852+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -319,16 +319,6 @@
   "monitoring": {
     "events": [
       {
-        "time": "2026-03-16T07:46:52.215987+00:00",
-        "type": "EVENING_CLOSE",
-        "pair": "USD/CHF",
-        "order_id": "MOCK-DD23C40E",
-        "entry_price": 0.78808,
-        "exit_price": 0.78792,
-        "pnl_pips": -1.6,
-        "pnl_usd": -2.18
-      },
-      {
         "time": "2026-03-16T07:51:05.335524+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
@@ -572,20 +562,15 @@
         "time": "2026-03-23T14:40:36.947016+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
+      },
+      {
+        "time": "2026-03-23T14:41:09.161386+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
   "run_history": [
-    {
-      "time": "2026-03-18T09:39:28.849368+00:00",
-      "action": "monitor",
-      "summary": {
-        "positions_checked": 0,
-        "actions": 0,
-        "closed": 0,
-        "circuit_breaker": false
-      }
-    },
     {
       "time": "2026-03-18T10:14:08.837685+00:00",
       "action": "monitor",
@@ -878,6 +863,16 @@
     },
     {
       "time": "2026-03-23T10:33:13.634486+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-23T14:40:36.949535+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
