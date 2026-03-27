@@ -1,15 +1,6 @@
 {
   "runs": [
     {
-      "time": "2026-03-16T07:21:30.926259+00:00",
-      "action": "close",
-      "summary": {
-        "positions_closed": 1,
-        "total_pnl_pips": 3.9,
-        "total_pnl_usd": 5.33
-      }
-    },
-    {
       "time": "2026-03-16T07:26:02.994571+00:00",
       "action": "monitor",
       "summary": {
@@ -999,6 +990,16 @@
     },
     {
       "time": "2026-03-27T21:52:49.738903+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-27T22:01:00.140852+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
