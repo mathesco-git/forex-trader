@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-30T20:07:16.838439+00:00",
+  "generated_at": "2026-03-30T22:06:11.878597+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -319,11 +319,6 @@
   "monitoring": {
     "events": [
       {
-        "time": "2026-03-20T19:40:34.614768+00:00",
-        "type": "NO_POSITIONS",
-        "message": "No open positions to monitor"
-      },
-      {
         "time": "2026-03-20T21:00:44.589088+00:00",
         "type": "EVENING_CLOSE",
         "message": "No positions to close"
@@ -567,20 +562,15 @@
         "time": "2026-03-30T20:07:16.836841+00:00",
         "type": "NO_POSITIONS",
         "message": "No open positions to monitor"
+      },
+      {
+        "time": "2026-03-30T22:06:11.877023+00:00",
+        "type": "NO_POSITIONS",
+        "message": "No open positions to monitor"
       }
     ]
   },
   "run_history": [
-    {
-      "time": "2026-03-25T10:10:56.302285+00:00",
-      "action": "monitor",
-      "summary": {
-        "positions_checked": 0,
-        "actions": 0,
-        "closed": 0,
-        "circuit_breaker": false
-      }
-    },
     {
       "time": "2026-03-25T12:05:43.967842+00:00",
       "action": "monitor",
@@ -863,6 +853,16 @@
     },
     {
       "time": "2026-03-30T18:07:01.124223+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-03-30T20:07:16.839567+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
