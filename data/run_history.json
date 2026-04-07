@@ -1,26 +1,6 @@
 {
   "runs": [
     {
-      "time": "2026-03-20T21:00:44.591288+00:00",
-      "action": "close",
-      "summary": {
-        "positions_closed": 0,
-        "total_pnl_pips": 0,
-        "total_pnl_usd": 0,
-        "day_summary": {
-          "date": "2026-03-20",
-          "trades": 0,
-          "wins": 0,
-          "losses": 0,
-          "win_rate": 0,
-          "total_pnl_pips": 0,
-          "total_pnl_usd": 0,
-          "best_trade": null,
-          "worst_trade": null
-        }
-      }
-    },
-    {
       "time": "2026-03-20T21:56:48.312731+00:00",
       "action": "monitor",
       "summary": {
@@ -1002,6 +982,16 @@
     },
     {
       "time": "2026-04-07T18:11:25.215839+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-04-07T18:11:50.750487+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
