@@ -1,17 +1,6 @@
 {
   "events": [
     {
-      "time": "2026-03-16T07:46:49.516371+00:00",
-      "type": "CHECK",
-      "pair": "USD/CHF",
-      "order_id": "MOCK-DD23C40E",
-      "price": 0.78792,
-      "confluence_now": 4,
-      "confluence_entry": 4,
-      "pnl_pips": -1.6,
-      "trailing_stop": false
-    },
-    {
       "time": "2026-03-16T07:46:49.693613+00:00",
       "type": "CHECK",
       "pair": "USD/CHF",
@@ -1086,6 +1075,11 @@
     },
     {
       "time": "2026-04-14T15:51:53.790690+00:00",
+      "type": "NO_POSITIONS",
+      "message": "No open positions to monitor"
+    },
+    {
+      "time": "2026-04-14T16:13:26.416754+00:00",
       "type": "NO_POSITIONS",
       "message": "No open positions to monitor"
     }
