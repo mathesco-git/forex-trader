@@ -1,16 +1,6 @@
 {
   "runs": [
     {
-      "time": "2026-04-03T16:06:28.499664+00:00",
-      "action": "monitor",
-      "summary": {
-        "positions_checked": 0,
-        "actions": 0,
-        "closed": 0,
-        "circuit_breaker": false
-      }
-    },
-    {
       "time": "2026-04-03T17:01:37.935501+00:00",
       "action": "monitor",
       "summary": {
@@ -991,6 +981,16 @@
     },
     {
       "time": "2026-04-17T14:11:48.796448+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-04-17T15:18:31.766514+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
