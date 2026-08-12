@@ -1,11 +1,6 @@
 {
   "events": [
     {
-      "time": "2026-07-21T09:30:57.861809+00:00",
-      "type": "NO_POSITIONS",
-      "message": "No open positions to monitor"
-    },
-    {
       "time": "2026-07-21T11:29:29.576282+00:00",
       "type": "NO_POSITIONS",
       "message": "No open positions to monitor"
@@ -997,6 +992,11 @@
     },
     {
       "time": "2026-08-12T14:06:40.506352+00:00",
+      "type": "NO_POSITIONS",
+      "message": "No open positions to monitor"
+    },
+    {
+      "time": "2026-08-12T15:15:14.011017+00:00",
       "type": "NO_POSITIONS",
       "message": "No open positions to monitor"
     }
