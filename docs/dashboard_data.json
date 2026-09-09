@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T12:14:32.243132+00:00",
+  "generated_at": "2026-09-09T15:00:15.349151+00:00",
   "summary": {
     "total_trades": 1,
     "open_positions": 0,
@@ -572,16 +572,6 @@
   },
   "run_history": [
     {
-      "time": "2026-09-03T12:00:57.163926+00:00",
-      "action": "monitor",
-      "summary": {
-        "positions_checked": 0,
-        "actions": 0,
-        "closed": 0,
-        "circuit_breaker": false
-      }
-    },
-    {
       "time": "2026-09-03T14:51:40.308331+00:00",
       "action": "monitor",
       "summary": {
@@ -863,6 +853,16 @@
     },
     {
       "time": "2026-09-09T12:11:33.750893+00:00",
+      "action": "monitor",
+      "summary": {
+        "positions_checked": 0,
+        "actions": 0,
+        "closed": 0,
+        "circuit_breaker": false
+      }
+    },
+    {
+      "time": "2026-09-09T12:14:32.244034+00:00",
       "action": "monitor",
       "summary": {
         "positions_checked": 0,
